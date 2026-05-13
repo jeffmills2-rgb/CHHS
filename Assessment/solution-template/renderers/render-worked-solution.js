@@ -153,6 +153,12 @@ function renderDiagram(parent, diagram, id) {
       }
       break;
 
+    case "integer-number-line-solution":
+      if (typeof renderIntegerNumberLineSolution === "function") {
+        renderIntegerNumberLineSolution(id, config);
+      }
+      break;
+
     case "probability-tree":
       if (typeof renderProbabilityTree === "function") {
         renderProbabilityTree(id, config);
