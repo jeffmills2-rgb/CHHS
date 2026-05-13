@@ -7,7 +7,6 @@
 <title>CHHS Worked Solution Template</title>
 
 <style>
-
 :root{
     --border:#444;
     --light:#f5f5f5;
@@ -16,9 +15,7 @@
     --accent:#0b57d0;
 }
 
-*{
-    box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
     margin:0;
@@ -33,7 +30,7 @@ body{
     min-height:297mm;
     margin:auto;
     background:white;
-    padding:24mm;
+    padding:22mm;
     box-shadow:0 0 18px rgba(0,0,0,0.15);
 }
 
@@ -67,38 +64,39 @@ body{
 
 .question-section{
     margin-bottom:55px;
+    break-inside:avoid;
 }
 
 .question-title{
-    font-size:32px;
+    font-size:30px;
     font-weight:700;
-    margin-bottom:20px;
+    margin-bottom:18px;
     color:var(--heading);
 }
 
 .criteria-table{
     width:100%;
     border-collapse:collapse;
-    margin-bottom:26px;
+    margin-bottom:24px;
 }
 
 .criteria-table th{
     border:2px solid var(--border);
     background:#f1f1f1;
-    padding:12px;
+    padding:11px;
     font-size:18px;
     text-align:left;
 }
 
 .criteria-table td{
     border:2px solid var(--border);
-    padding:12px;
+    padding:11px;
     font-size:17px;
     vertical-align:top;
 }
 
 .criteria-table .marks{
-    width:110px;
+    width:100px;
     text-align:center;
     font-weight:bold;
 }
@@ -107,46 +105,121 @@ body{
     font-size:20px;
     font-style:italic;
     font-weight:700;
-    margin-bottom:18px;
+    margin-bottom:16px;
 }
 
 .solution-box{
     padding-left:10px;
     font-size:22px;
-    line-height:2;
+    line-height:1.9;
     font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
 }
 
-.solution-step{
-    margin-bottom:10px;
-}
+.solution-step{ margin-bottom:8px; }
 
 .final-answer{
-    margin-top:20px;
+    margin-top:18px;
     font-weight:bold;
 }
 
-.diagram-placeholder{
+.diagram-box{
     width:100%;
-    height:280px;
-    border:2px dashed #777;
-    margin-top:25px;
+    min-height:260px;
+    margin-top:22px;
+    border:1.5px solid #bbb;
+    background:#fff;
+    padding:10px;
     display:flex;
-    justify-content:center;
     align-items:center;
-    background:#fafafa;
-    color:#666;
-    font-size:20px;
-    letter-spacing:1px;
+    justify-content:center;
+}
+
+.diagram-box.large{
+    min-height:360px;
 }
 
 .teacher-note{
-    margin-top:24px;
+    margin-top:22px;
     background:#f8f8f8;
     border-left:5px solid #999;
-    padding:14px 18px;
+    padding:13px 16px;
     font-size:15px;
     line-height:1.7;
+}
+
+/* Algebra layout engine styles */
+
+.algebra-layout {
+    width: 100%;
+    border: 2px solid #222;
+    background: #fff;
+    padding: 22px 26px;
+    margin-top: 18px;
+}
+
+.algebra-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.algebra-steps {
+    display: grid;
+    gap: 8px;
+}
+
+.algebra-row {
+    display: grid;
+    grid-template-columns: 38px 1fr 220px;
+    column-gap: 16px;
+    align-items: start;
+    padding: 6px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.algebra-line-number {
+    font-size: 14px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 5px;
+}
+
+.algebra-expression {
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 24px;
+    line-height: 1.6;
+}
+
+.algebra-reason {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+    padding-top: 8px;
+}
+
+.algebra-final {
+    margin-top: 18px;
+    padding-top: 12px;
+    border-top: 2px solid #222;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.algebra-notes {
+    margin-top: 18px;
+    background: #f7f7f7;
+    border-left: 5px solid #777;
+    padding: 12px 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.algebra-note {
+    margin-bottom: 4px;
 }
 
 .footer{
@@ -159,8 +232,11 @@ body{
     color:#666;
 }
 
-@media print{
+.page-break{
+    break-before:page;
+}
 
+@media print{
     body{
         background:white;
         padding:0;
@@ -171,11 +247,13 @@ body{
         min-height:auto;
         box-shadow:none;
         margin:0;
-        padding:18mm;
+        padding:16mm;
     }
 
+    .question-section{
+        break-inside:avoid;
+    }
 }
-
 </style>
 </head>
 
@@ -184,108 +262,148 @@ body{
 <div class="page">
 
     <div class="header">
-
         <div class="school-block">
             <h1>CHHS</h1>
             <h2>Worked Solution Template</h2>
         </div>
 
         <div class="meta">
-            Stage 6 Mathematics<br>
+            Mathematics Faculty<br>
             Assessment Solutions<br>
             2026
         </div>
-
     </div>
 
-    <!-- QUESTION BLOCK -->
+    <!-- ALGEBRA LAYOUT EXAMPLE -->
 
     <section class="question-section">
-
-        <div class="question-title">
-            Question 12
-        </div>
+        <div class="question-title">Question 1 — Algebra Layout Engine</div>
 
         <table class="criteria-table">
-
             <tr>
                 <th>Criteria</th>
                 <th class="marks">Marks</th>
             </tr>
+            <tr>
+                <td>Provides correct solution</td>
+                <td class="marks">2</td>
+            </tr>
+            <tr>
+                <td>Shows correct algebraic working</td>
+                <td class="marks">1</td>
+            </tr>
+        </table>
 
+        <div class="sample-answer-title">Sample answer:</div>
+
+        <div id="algebra-example"></div>
+    </section>
+
+    <!-- COORDINATE GRAPH EXAMPLE -->
+
+    <section class="question-section">
+        <div class="question-title">Question 2 — Coordinate Graph Engine</div>
+
+        <table class="criteria-table">
+            <tr>
+                <th>Criteria</th>
+                <th class="marks">Marks</th>
+            </tr>
+            <tr>
+                <td>Provides correct graph</td>
+                <td class="marks">2</td>
+            </tr>
+            <tr>
+                <td>Identifies key features of the graph</td>
+                <td class="marks">1</td>
+            </tr>
+        </table>
+
+        <div class="sample-answer-title">Sample answer:</div>
+
+        <div id="coordinate-graph-example" class="diagram-box large"></div>
+    </section>
+
+    <!-- GEOMETRY EXAMPLE -->
+
+    <section class="question-section page-break">
+        <div class="question-title">Question 3 — Geometry Engine</div>
+
+        <table class="criteria-table">
+            <tr>
+                <th>Criteria</th>
+                <th class="marks">Marks</th>
+            </tr>
+            <tr>
+                <td>Uses the diagram correctly</td>
+                <td class="marks">2</td>
+            </tr>
+            <tr>
+                <td>Identifies the required angle or side relationship</td>
+                <td class="marks">1</td>
+            </tr>
+        </table>
+
+        <div class="sample-answer-title">Sample answer:</div>
+
+        <div id="geometry-example" class="diagram-box large"></div>
+    </section>
+
+    <!-- NUMBER LINE EXAMPLE -->
+
+    <section class="question-section">
+        <div class="question-title">Question 4 — Number Line Engine</div>
+
+        <table class="criteria-table">
+            <tr>
+                <th>Criteria</th>
+                <th class="marks">Marks</th>
+            </tr>
+            <tr>
+                <td>Represents the calculation correctly on a number line</td>
+                <td class="marks">2</td>
+            </tr>
+        </table>
+
+        <div class="sample-answer-title">Sample answer:</div>
+
+        <div id="number-line-example" class="diagram-box"></div>
+    </section>
+
+    <!-- PROBABILITY TREE EXAMPLE -->
+
+    <section class="question-section">
+        <div class="question-title">Question 5 — Probability Tree Engine</div>
+
+        <table class="criteria-table">
+            <tr>
+                <th>Criteria</th>
+                <th class="marks">Marks</th>
+            </tr>
             <tr>
                 <td>Provides correct solution</td>
                 <td class="marks">3</td>
             </tr>
-
             <tr>
-                <td>Finds the correct gradient of the tangent, or equivalent merit</td>
+                <td>Demonstrates understanding of conditional probability</td>
                 <td class="marks">2</td>
             </tr>
-
             <tr>
-                <td>Attempts to find the gradient of the tangent, or equivalent merit</td>
+                <td>Correctly interprets the probabilities</td>
                 <td class="marks">1</td>
             </tr>
-
         </table>
 
-        <div class="sample-answer-title">
-            Sample answer:
-        </div>
+        <div class="sample-answer-title">Sample answer:</div>
 
-        <div class="solution-box">
-
-            <div class="solution-step">
-                y = 5x³ − 2x⁻² − 9
-            </div>
-
-            <div class="solution-step">
-                y′ = 15x² + 4x⁻³
-            </div>
-
-            <div class="solution-step">
-                y′ = 15x² + 4/x³
-            </div>
-
-            <div class="solution-step">
-                y′ = 15(1) + 4/(1)
-            </div>
-
-            <div class="solution-step">
-                y′ = 19
-            </div>
-
-            <div class="solution-step">
-                y − y₁ = m(x − x₁)
-            </div>
-
-            <div class="solution-step">
-                y + 6 = 19(x − 1)
-            </div>
-
-            <div class="solution-step">
-                y = 19x − 25
-            </div>
-
-            <div class="final-answer">
-                ∴ y = 19x − 25
-            </div>
-
-        </div>
-
-        <div class="diagram-placeholder">
-            DIAGRAM / GRAPH PLACEHOLDER
-        </div>
-
-        <div class="teacher-note">
-            <strong>Teacher note:</strong>
-            This placeholder area will later support reusable diagram engines
-            including coordinate graphs, geometry diagrams, probability trees,
-            number lines and trigonometric models.
-        </div>
-
+        <div id="probability-tree-example" class="diagram-box large"></div>
     </section>
+
+    <div class="teacher-note">
+        <strong>Teacher note:</strong>
+        This index file is currently a demonstration page showing all available CHHS diagram engines.
+        Later, the same engines can be called selectively by an AI prompt to generate a clean worked solution.
+    </div>
 
     <div class="footer">
         <div>CHHS Mathematics Faculty</div>
@@ -294,31 +412,129 @@ body{
 
 </div>
 
+<script src="diagram-engines/algebra-layout.js"></script>
+<script src="diagram-engines/coordinate-graph.js"></script>
+<script src="diagram-engines/geometry-engine.js"></script>
+<script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/probability-tree.js"></script>
+
 <script>
+renderAlgebraLayout("algebra-example", {
+  title: "Solving a linear equation",
+  steps: [
+    {
+      expression: "3x + 7 = 22",
+      reason: "Original equation"
+    },
+    {
+      expression: "3x = 15",
+      reason: "Subtract 7 from both sides"
+    },
+    {
+      expression: "x = 5",
+      reason: "Divide both sides by 3"
+    }
+  ],
+  finalAnswer: "∴ x = 5",
+  notes: [
+    "Each line should show an equivalent equation.",
+    "The final answer should be clearly identified."
+  ]
+});
 
-function createCriteriaRow(criteria, marks){
-    return `
-        <tr>
-            <td>${criteria}</td>
-            <td class="marks">${marks}</td>
-        </tr>
-    `;
-}
+renderCoordinateGraph("coordinate-graph-example", {
+  title: "Graph of y = x² - 4",
+  xmin: -5,
+  xmax: 5,
+  ymin: -6,
+  ymax: 8,
+  gridStep: 1,
+  xTickStep: 1,
+  yTickStep: 2,
+  functions: [
+    {
+      label: "y = x² - 4",
+      labelX: 2.6,
+      fn: x => x * x - 4
+    }
+  ],
+  points: [
+    { x: -2, y: 0, label: "(-2, 0)", dx: -70, dy: -10 },
+    { x: 2, y: 0, label: "(2, 0)", dx: 10, dy: -10 },
+    { x: 0, y: -4, label: "(0, -4)", dx: 10, dy: 20 }
+  ]
+});
 
-function createSolutionStep(text){
-    return `
-        <div class="solution-step">${text}</div>
-    `;
-}
+renderGeometryDiagram("geometry-example", {
+  points: {
+    A: { x: 140, y: 340 },
+    B: { x: 620, y: 340 },
+    C: { x: 360, y: 90 }
+  },
+  shapes: [
+    { type: "polygon", points: ["A", "B", "C"], fill: false }
+  ],
+  labels: [
+    { point: "A", text: "A", dx: -20, dy: 28 },
+    { point: "B", text: "B", dx: 20, dy: 28 },
+    { point: "C", text: "C", dx: 0, dy: -18 },
+    { x: 360, y: 365, text: "12 cm", small: true },
+    { x: 230, y: 205, text: "10 cm", small: true },
+    { x: 505, y: 205, text: "x cm", small: true }
+  ],
+  angleMarks: [
+    { vertex: "A", from: "B", to: "C", label: "48°", r: 42, reflex: false }
+  ],
+  sideMarks: [
+    { from: "A", to: "C", count: 1 },
+    { from: "B", to: "C", count: 2 }
+  ]
+});
 
-function createDiagramPlaceholder(label="DIAGRAM PLACEHOLDER"){
-    return `
-        <div class="diagram-placeholder">${label}</div>
-    `;
-}
+renderNumberLine("number-line-example", {
+  xmin: -5,
+  xmax: 10,
+  tickStep: 1,
+  labelStep: 1,
+  points: [
+    { x: 2, label: "Start", dy: -22 },
+    { x: 7, label: "End", dy: -22 }
+  ],
+  jumps: [
+    { from: 2, to: 7, label: "+5" }
+  ]
+});
+
+renderProbabilityTree("probability-tree-example", {
+  outcomes: [
+    {
+      label: "Amara",
+      probability: "1/6",
+      outcomes: [
+        { label: "W", probability: "0.5" },
+        { label: "W′", probability: "0.5" }
+      ]
+    },
+    {
+      label: "Bala",
+      probability: "1/3",
+      outcomes: [
+        { label: "W", probability: "0.4" },
+        { label: "W′", probability: "0.6" }
+      ]
+    },
+    {
+      label: "Cassie",
+      probability: "1/2",
+      outcomes: [
+        { label: "W", probability: "0.2" },
+        { label: "W′", probability: "0.8" }
+      ]
+    }
+  ]
+});
 
 console.log("CHHS Solution Template Loaded");
-
 </script>
 
 </body>
