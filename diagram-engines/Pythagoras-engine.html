@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pythagoras Diagram Engine Prototype</title>
+  <style>
+    :root {
+      --bg: #f6f3ee;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #6b7280;
+      --accent: #315f7d;
+      --accent-soft: #e6f0f5;
+      --line: #25313d;
+      --grid: #d9e2ec;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    header {
+      padding: 22px 28px 12px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fffaf3;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 26px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 12px;
+      padding: 18px 28px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    select, input, button {
+      width: 100%;
+      font: inherit;
+      border-radius: 12px;
+      border: 1px solid #cbd5e1;
+      padding: 10px 12px;
+      background: white;
+    }
+
+    button {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      align-self: end;
+      min-height: 44px;
+      box-shadow: 0 6px 16px rgba(49, 95, 125, 0.18);
+    }
+
+    button:hover { filter: brightness(1.05); }
+
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      background: white;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .check-row input {
+      width: auto;
+      transform: scale(1.15);
+      accent-color: var(--accent);
+    }
+
+    main {
+      padding: 22px 28px 34px;
+    }
+
+    .notes {
+      background: var(--accent-soft);
+      border: 1px solid #c7ddea;
+      color: #23445a;
+      padding: 12px 14px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 12px;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .question {
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    svg {
+      width: 100%;
+      height: 230px;
+      display: block;
+      background:
+        linear-gradient(90deg, rgba(217,226,236,0.38) 1px, transparent 1px),
+        linear-gradient(rgba(217,226,236,0.38) 1px, transparent 1px);
+      background-size: 24px 24px;
+      border-radius: 14px;
+      border: 1px solid #eef2f7;
+    }
+
+    .tri-line {
+      stroke: var(--line);
+      stroke-width: 3;
+      fill: rgba(255, 255, 255, 0.55);
+      stroke-linejoin: round;
+    }
+
+    .right-marker {
+      stroke: var(--line);
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linejoin: round;
+    }
+
+    .side-label text {
+      font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+      font-size: 19px;
+      font-weight: 700;
+      dominant-baseline: middle;
+      text-anchor: middle;
+      fill: #111827;
+      paint-order: stroke;
+      stroke: rgba(255,255,255,0.94);
+      stroke-width: 5px;
+      stroke-linejoin: round;
+    }
+
+    .meta {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .pill {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 999px;
+      padding: 4px 8px;
+    }
+
+    
+
+    @media print {
+      body { background: white; }
+      header, .controls, .notes, .meta { display: none; }
+      main { padding: 0; }
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8mm;
+      }
+      .card {
+        box-shadow: none;
+        break-inside: avoid;
+        border: 1px solid #ccc;
+      }
+      svg {
+        height: 185px;
+        background: white;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pythagoras Diagram Engine Prototype</h1>
+    <p class="subtitle">Standalone test page for clear right-triangle diagrams before building the full worksheet generator.</p>
+  </header>
+
+  <section class="controls">
+    <div>
+      <label for="mode">Question mode</label>
+      <select id="mode">
+        <option value="whole">Whole number answers</option>
+        <option value="decimal-question">Decimal used in question</option>
+        <option value="mixed">Mixed</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="missing">Missing side</label>
+      <select id="missing">
+        <option value="mixed">Mixed</option>
+        <option value="hypotenuse">Hypotenuse</option>
+        <option value="short-leg">Shorter side</option>
+        <option value="long-leg">Longer side</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="rounding">Decimal answer rule</label>
+      <select id="rounding">
+        <option value="1">Round answers to 1 decimal place</option>
+        <option value="2">Round answers to 2 decimal places</option>
+        <option value="exact-or-1">Exact if whole, otherwise 1 decimal</option>
+        <option value="exact-or-2">Exact if whole, otherwise 2 decimals</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="units">Units</label>
+      <select id="units">
+        <option value="mixed">Random cm / m</option>
+        <option value="cm">Centimetres only</option>
+        <option value="m">Metres only</option>
+        <option value="none">No units</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="count">Number of diagrams</label>
+      <input id="count" type="number" min="1" max="30" value="12" />
+    </div>
+
+    <button id="generateBtn">Generate diagrams</button>
+  </section>
+
+  <main>
+    <div class="notes">
+      Current rules: each triangle is a valid right triangle; the smallest acute angle is kept between 25° and 65°; diagrams are approximately to scale but padded for clarity; labels avoid the triangle and each other; answers are calculated using the selected rounding rule.
+    </div>
+    <div id="grid" class="grid"></div>
+  </main>
+
+  <script>
+    const triples = [
+      [3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25],
+      [20, 21, 29], [9, 40, 41], [12, 35, 37], [11, 60, 61],
+      [28, 45, 53], [33, 56, 65], [16, 63, 65], [48, 55, 73]
+    ];
+
+    const grid = document.getElementById('grid');
+    const generateBtn = document.getElementById('generateBtn');
+    
+
+    function choice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function round1(n) { return Math.round(n * 10) / 10; }
+    function fmt(n) { return Number.isInteger(n) ? String(n) : n.toFixed(1); }
+
+    function smallestAngle(a, b, c) {
+      const smallLeg = Math.min(a, b);
+      return Math.asin(smallLeg / c) * 180 / Math.PI;
+    }
+
+    function tripleAllowed(t) {
+      const [a, b, c] = t;
+      const angle = smallestAngle(a, b, c);
+      return angle >= 25 && angle <= 65;
+    }
+
+    function calculateAnswer(tri) {
+      if (tri.missing === 'hypotenuse') return Math.sqrt(tri.a * tri.a + tri.b * tri.b);
+      if (tri.missing === 'short-leg') return Math.sqrt(tri.c * tri.c - tri.b * tri.b);
+      return Math.sqrt(tri.c * tri.c - tri.a * tri.a);
+    }
+
+    function formatAnswer(value, rule) {
+      const nearWhole = Math.abs(value - Math.round(value)) < 1e-8;
+      if (rule === '1') return value.toFixed(1);
+      if (rule === '2') return value.toFixed(2);
+      if (rule === 'exact-or-1') return nearWhole ? String(Math.round(value)) : value.toFixed(1);
+      if (rule === 'exact-or-2') return nearWhole ? String(Math.round(value)) : value.toFixed(2);
+      return value.toFixed(1);
+    }
+
+    function buildTriangle(modeSetting, missingSetting, unitsSetting, roundingRule) {
+      const allowed = triples.filter(tripleAllowed);
+      let [a0, b0, c0] = choice(allowed);
+      const scale = choice([1, 2, 3, 4]);
+      let a = a0 * scale;
+      let b = b0 * scale;
+      let c = c0 * scale;
+
+      let mode = modeSetting;
+      if (mode === 'mixed') mode = choice(['whole', 'decimal-question']);
+
+      if (mode === 'decimal-question') {
+        const factor = choice([1.2, 1.5, 2.5, 3.5]);
+        a = round1(a0 * factor);
+        b = round1(b0 * factor);
+        c = round1(c0 * factor);
+      }
+
+      const shortLeg = Math.min(a, b);
+      const longLeg = Math.max(a, b);
+      let missing = missingSetting;
+      if (missing === 'mixed') missing = choice(['hypotenuse', 'short-leg', 'long-leg']);
+
+      let units = unitsSetting;
+      if (units === 'mixed') units = choice(['cm', 'm']);
+      if (units === 'none') units = '';
+
+      const tri = { a: shortLeg, b: longLeg, c, missing, mode, units };
+      tri.answerRaw = calculateAnswer(tri);
+      tri.answerDisplay = formatAnswer(tri.answerRaw, roundingRule);
+      tri.roundingRule = roundingRule;
+      return tri;
+    }
+
+    function rotatePoint(p, angleRad) {
+      const cos = Math.cos(angleRad);
+      const sin = Math.sin(angleRad);
+      return { x: p.x * cos - p.y * sin, y: p.x * sin + p.y * cos };
+    }
+
+    function transformTriangle(a, b) {
+      let points = [
+        { name: 'A', x: 0, y: 0 },
+        { name: 'B', x: b, y: 0 },
+        { name: 'C', x: 0, y: -a }
+      ];
+
+      if (Math.random() < 0.5) points = points.map(p => ({ ...p, x: -p.x }));
+
+      const angle = choice([0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330]) * Math.PI / 180;
+      points = points.map(p => ({ ...p, ...rotatePoint(p, angle) }));
+
+      const width = 260;
+      const height = 210;
+      const padding = 42;
+      const minX = Math.min(...points.map(p => p.x));
+      const maxX = Math.max(...points.map(p => p.x));
+      const minY = Math.min(...points.map(p => p.y));
+      const maxY = Math.max(...points.map(p => p.y));
+      const rawW = maxX - minX;
+      const rawH = maxY - minY;
+      const s = Math.min((width - 2 * padding) / rawW, (height - 2 * padding) / rawH);
+
+      points = points.map(p => ({
+        ...p,
+        x: (p.x - minX) * s + (width - rawW * s) / 2,
+        y: (p.y - minY) * s + (height - rawH * s) / 2
+      }));
+
+      return Object.fromEntries(points.map(p => [p.name, p]));
+    }
+
+    function sideLabelText(sideName, tri) {
+      if (tri.missing === 'hypotenuse' && sideName === 'c') return 'x';
+      if (tri.missing === 'short-leg' && sideName === 'a') return 'x';
+      if (tri.missing === 'long-leg' && sideName === 'b') return 'x';
+      return `${fmt(tri[sideName])}${tri.units ? ' ' + tri.units : ''}`;
+    }
+
+    function rectIntersectsSegment(rect, p1, p2) {
+      function pointInside(p) {
+        return p.x >= rect.x && p.x <= rect.x + rect.w && p.y >= rect.y && p.y <= rect.y + rect.h;
+      }
+      function ccw(A, B, C) {
+        return (C.y - A.y) * (B.x - A.x) > (B.y - A.y) * (C.x - A.x);
+      }
+      function segmentsIntersect(A, B, C, D) {
+        return ccw(A, C, D) !== ccw(B, C, D) && ccw(A, B, C) !== ccw(A, B, D);
+      }
+      const corners = [
+        { x: rect.x, y: rect.y },
+        { x: rect.x + rect.w, y: rect.y },
+        { x: rect.x + rect.w, y: rect.y + rect.h },
+        { x: rect.x, y: rect.y + rect.h }
+      ];
+      if (pointInside(p1) || pointInside(p2)) return true;
+      for (let i = 0; i < 4; i++) {
+        if (segmentsIntersect(p1, p2, corners[i], corners[(i + 1) % 4])) return true;
+      }
+      return false;
+    }
+
+    function rectsOverlap(r1, r2) {
+      return !(r1.x + r1.w < r2.x || r2.x + r2.w < r1.x || r1.y + r1.h < r2.y || r2.y + r2.h < r1.y);
+    }
+
+    function pointInTriangle(p, A, B, C) {
+      const area = (P, Q, R) => Math.abs((P.x * (Q.y - R.y) + Q.x * (R.y - P.y) + R.x * (P.y - Q.y)) / 2);
+      const main = area(A, B, C);
+      const a1 = area(p, B, C);
+      const a2 = area(A, p, C);
+      const a3 = area(A, B, p);
+      return Math.abs(main - (a1 + a2 + a3)) < 0.6;
+    }
+
+    function makeLabelCandidate(p1, p2, text, centroid, t, off) {
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const len = Math.hypot(dx, dy) || 1;
+      let nx = -dy / len;
+      let ny = dx / len;
+      const mid = { x: (p1.x + p2.x) / 2, y: (p1.y + p2.y) / 2 };
+      const toMid = { x: mid.x - centroid.x, y: mid.y - centroid.y };
+      if (nx * toMid.x + ny * toMid.y < 0) { nx *= -1; ny *= -1; }
+
+      const x = p1.x + dx * t + nx * off;
+      const y = p1.y + dy * t + ny * off;
+      const w = Math.max(42, text.length * 12 + 12);
+      const h = 28;
+      return { x, y, rect: { x: x - w / 2, y: y - h / 2, w, h }, t, off };
+    }
+
+    function scoreLabelCandidate(candidate, allEdges, trianglePoints, placedRects) {
+      const margin = 3;
+      const safeRect = {
+        x: candidate.rect.x - margin,
+        y: candidate.rect.y - margin,
+        w: candidate.rect.w + margin * 2,
+        h: candidate.rect.h + margin * 2
+      };
+
+      const rectPoints = [
+        { x: safeRect.x, y: safeRect.y },
+        { x: safeRect.x + safeRect.w, y: safeRect.y },
+        { x: safeRect.x + safeRect.w, y: safeRect.y + safeRect.h },
+        { x: safeRect.x, y: safeRect.y + safeRect.h },
+        { x: candidate.x, y: candidate.y }
+      ];
+
+      const insideHits = rectPoints.filter(pt => pointInTriangle(pt, trianglePoints[0], trianglePoints[1], trianglePoints[2])).length;
+      const edgeHits = allEdges.filter(edge => rectIntersectsSegment(safeRect, edge[0], edge[1])).length;
+      const labelHits = placedRects.filter(r => rectsOverlap(safeRect, r)).length;
+      const outOfBounds = Math.max(0, 10 - candidate.rect.x) + Math.max(0, candidate.rect.x + candidate.rect.w - 250) + Math.max(0, 10 - candidate.rect.y) + Math.max(0, candidate.rect.y + candidate.rect.h - 200);
+
+      return insideHits * 2500 + edgeHits * 1400 + labelHits * 2200 + outOfBounds * 10 + candidate.off * 2 + Math.abs(candidate.t - 0.5) * 45;
+    }
+
+    function labelForSide(p1, p2, text, centroid, allEdges, trianglePoints, placedRects) {
+      const candidates = [];
+      const alongPositions = [0.5, 0.42, 0.58, 0.34, 0.66, 0.26, 0.74];
+      const offsets = [22, 28, 34, 40, 46, 52];
+
+      for (const off of offsets) {
+        for (const t of alongPositions) {
+          candidates.push(makeLabelCandidate(p1, p2, text, centroid, t, off));
+        }
+      }
+
+      let best = candidates[0];
+      let bestScore = Infinity;
+
+      for (const candidate of candidates) {
+        const score = scoreLabelCandidate(candidate, allEdges, trianglePoints, placedRects);
+        if (score < bestScore) {
+          bestScore = score;
+          best = candidate;
+        }
+        if (score === candidate.off * 2 + Math.abs(candidate.t - 0.5) * 45 && candidate.off <= 34) break;
+      }
+
+      const placedSafeRect = {
+        x: best.rect.x - 4,
+        y: best.rect.y - 4,
+        w: best.rect.w + 8,
+        h: best.rect.h + 8
+      };
+      placedRects.push(placedSafeRect);
+
+      return `
+        <g class="side-label">
+          <text x="${best.x}" y="${best.y + 1}">${text}</text>
+        </g>`;
+    }
+
+    function unitVector(from, to) {
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      const len = Math.hypot(dx, dy) || 1;
+      return { x: dx / len, y: dy / len };
+    }
+
+    function rightAngleMarker(A, B, C) {
+      const size = 18;
+      const v1 = unitVector(A, B);
+      const v2 = unitVector(A, C);
+      const p1 = { x: A.x + v1.x * size, y: A.y + v1.y * size };
+      const p2 = { x: p1.x + v2.x * size, y: p1.y + v2.y * size };
+      const p3 = { x: A.x + v2.x * size, y: A.y + v2.y * size };
+      return `<path class="right-marker" d="M ${p1.x} ${p1.y} L ${p2.x} ${p2.y} L ${p3.x} ${p3.y}" />`;
+    }
+
+    function renderTriangleCard(tri, index) {
+      const P = transformTriangle(tri.a, tri.b);
+      const A = P.A, B = P.B, C = P.C;
+      const centroid = { x: (A.x + B.x + C.x) / 3, y: (A.y + B.y + C.y) / 3 };
+      const edges = [[A, B], [A, C], [B, C]];
+      const trianglePoints = [A, B, C];
+      const placedRects = [];
+
+      const labels = [
+        labelForSide(A, C, sideLabelText('a', tri), centroid, edges, trianglePoints, placedRects),
+        labelForSide(A, B, sideLabelText('b', tri), centroid, edges, trianglePoints, placedRects),
+        labelForSide(B, C, sideLabelText('c', tri), centroid, edges, trianglePoints, placedRects)
+      ].join('');
+
+      const angle = smallestAngle(tri.a, tri.b, tri.c).toFixed(1);
+      const missingReadable = { 'hypotenuse': 'hypotenuse', 'short-leg': 'shorter side', 'long-leg': 'longer side' }[tri.missing];
+      const modeReadable = tri.mode === 'whole' ? 'whole number answer' : 'decimal in question';
+      const answerWithUnits = `${tri.answerDisplay}${tri.units ? ' ' + tri.units : ''}`;
+
+      return `
+        <article class="card">
+          <div class="card-head">
+            <span class="question">Question ${index + 1}</span>
+            <span>Find x</span>
+          </div>
+          <svg viewBox="0 0 260 210" role="img" aria-label="Right triangle diagram">
+            <polygon class="tri-line" points="${A.x},${A.y} ${B.x},${B.y} ${C.x},${C.y}" />
+            ${rightAngleMarker(A, B, C)}
+            ${labels}
+          </svg>
+          <div class="meta">
+            <span class="pill">${missingReadable}</span>
+            <span class="pill">${modeReadable}</span>
+            <span class="pill">smallest angle ${angle}°</span>
+            <span class="pill">answer: ${answerWithUnits}</span>
+            <span class="pill">actual: ${fmt(tri.a)}, ${fmt(tri.b)}, ${fmt(tri.c)}${tri.units ? ' ' + tri.units : ''}</span>
+          </div>
+        </article>
+      `;
+    }
+
+    function generate() {
+      const mode = document.getElementById('mode').value;
+      const missing = document.getElementById('missing').value;
+      const units = document.getElementById('units').value;
+      const rounding = document.getElementById('rounding').value;
+      const count = Math.max(1, Math.min(30, Number(document.getElementById('count').value) || 12));
+
+      const cards = Array.from({ length: count }, (_, i) => {
+        const tri = buildTriangle(mode, missing, units, rounding);
+        return renderTriangleCard(tri, i);
+      });
+      grid.innerHTML = cards.join('');
+    }
+
+    generateBtn.addEventListener('click', generate);
+
+    generate();
+  </script>
+</body>
+</html>
