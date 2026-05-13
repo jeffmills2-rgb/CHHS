@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CHHS Worked Solution Template</title>
+
+<style>
+
+:root{
+    --border:#444;
+    --light:#f5f5f5;
+    --heading:#111;
+    --text:#222;
+    --accent:#0b57d0;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:40px;
+    background:#dfe6ec;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+}
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:24mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #222;
+    padding-bottom:14px;
+    margin-bottom:28px;
+}
+
+.school-block h1{
+    margin:0;
+    font-size:34px;
+    letter-spacing:1px;
+    color:var(--accent);
+}
+
+.school-block h2{
+    margin:6px 0 0 0;
+    font-size:18px;
+    font-weight:500;
+}
+
+.meta{
+    text-align:right;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.question-section{
+    margin-bottom:55px;
+}
+
+.question-title{
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:20px;
+    color:var(--heading);
+}
+
+.criteria-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:26px;
+}
+
+.criteria-table th{
+    border:2px solid var(--border);
+    background:#f1f1f1;
+    padding:12px;
+    font-size:18px;
+    text-align:left;
+}
+
+.criteria-table td{
+    border:2px solid var(--border);
+    padding:12px;
+    font-size:17px;
+    vertical-align:top;
+}
+
+.criteria-table .marks{
+    width:110px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.sample-answer-title{
+    font-size:20px;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+.solution-box{
+    padding-left:10px;
+    font-size:22px;
+    line-height:2;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+}
+
+.solution-step{
+    margin-bottom:10px;
+}
+
+.final-answer{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+.diagram-placeholder{
+    width:100%;
+    height:280px;
+    border:2px dashed #777;
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#fafafa;
+    color:#666;
+    font-size:20px;
+    letter-spacing:1px;
+}
+
+.teacher-note{
+    margin-top:24px;
+    background:#f8f8f8;
+    border-left:5px solid #999;
+    padding:14px 18px;
+    font-size:15px;
+    line-height:1.7;
+}
+
+.footer{
+    margin-top:60px;
+    border-top:2px solid #222;
+    padding-top:10px;
+    font-size:13px;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+}
+
+@media print{
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        width:100%;
+        min-height:auto;
+        box-shadow:none;
+        margin:0;
+        padding:18mm;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header">
+
+        <div class="school-block">
+            <h1>CHHS</h1>
+            <h2>Worked Solution Template</h2>
+        </div>
+
+        <div class="meta">
+            Stage 6 Mathematics<br>
+            Assessment Solutions<br>
+            2026
+        </div>
+
+    </div>
+
+    <!-- QUESTION BLOCK -->
+
+    <section class="question-section">
+
+        <div class="question-title">
+            Question 12
+        </div>
+
+        <table class="criteria-table">
+
+            <tr>
+                <th>Criteria</th>
+                <th class="marks">Marks</th>
+            </tr>
+
+            <tr>
+                <td>Provides correct solution</td>
+                <td class="marks">3</td>
+            </tr>
+
+            <tr>
+                <td>Finds the correct gradient of the tangent, or equivalent merit</td>
+                <td class="marks">2</td>
+            </tr>
+
+            <tr>
+                <td>Attempts to find the gradient of the tangent, or equivalent merit</td>
+                <td class="marks">1</td>
+            </tr>
+
+        </table>
+
+        <div class="sample-answer-title">
+            Sample answer:
+        </div>
+
+        <div class="solution-box">
+
+            <div class="solution-step">
+                y = 5x³ − 2x⁻² − 9
+            </div>
+
+            <div class="solution-step">
+                y′ = 15x² + 4x⁻³
+            </div>
+
+            <div class="solution-step">
+                y′ = 15x² + 4/x³
+            </div>
+
+            <div class="solution-step">
+                y′ = 15(1) + 4/(1)
+            </div>
+
+            <div class="solution-step">
+                y′ = 19
+            </div>
+
+            <div class="solution-step">
+                y − y₁ = m(x − x₁)
+            </div>
+
+            <div class="solution-step">
+                y + 6 = 19(x − 1)
+            </div>
+
+            <div class="solution-step">
+                y = 19x − 25
+            </div>
+
+            <div class="final-answer">
+                ∴ y = 19x − 25
+            </div>
+
+        </div>
+
+        <div class="diagram-placeholder">
+            DIAGRAM / GRAPH PLACEHOLDER
+        </div>
+
+        <div class="teacher-note">
+            <strong>Teacher note:</strong>
+            This placeholder area will later support reusable diagram engines
+            including coordinate graphs, geometry diagrams, probability trees,
+            number lines and trigonometric models.
+        </div>
+
+    </section>
+
+    <div class="footer">
+        <div>CHHS Mathematics Faculty</div>
+        <div>Generated Solution Template</div>
+    </div>
+
+</div>
+
+<script>
+
+function createCriteriaRow(criteria, marks){
+    return `
+        <tr>
+            <td>${criteria}</td>
+            <td class="marks">${marks}</td>
+        </tr>
+    `;
+}
+
+function createSolutionStep(text){
+    return `
+        <div class="solution-step">${text}</div>
+    `;
+}
+
+function createDiagramPlaceholder(label="DIAGRAM PLACEHOLDER"){
+    return `
+        <div class="diagram-placeholder">${label}</div>
+    `;
+}
+
+console.log("CHHS Solution Template Loaded");
+
+</script>
+
+</body>
+</html>
