@@ -25,9 +25,7 @@ body{
     color:var(--text);
 }
 
-#app{
-    width:100%;
-}
+#app{ width:100%; }
 
 .page{
     width:210mm;
@@ -262,9 +260,7 @@ body{
     line-height: 1.6;
 }
 
-.algebra-note {
-    margin-bottom: 4px;
-}
+.algebra-note { margin-bottom: 4px; }
 
 .footer{
     margin-top:60px;
@@ -276,9 +272,7 @@ body{
     color:#666;
 }
 
-.page-break{
-    break-before:page;
-}
+.page-break{ break-before:page; }
 
 @media print{
     body{
@@ -309,6 +303,7 @@ body{
 <script src="diagram-engines/coordinate-graph.js"></script>
 <script src="diagram-engines/geometry-engine.js"></script>
 <script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/integer-number-line-solution.js"></script>
 <script src="diagram-engines/probability-tree.js"></script>
 <script src="renderers/render-worked-solution.js"></script>
 
@@ -443,6 +438,49 @@ const workedSolutionData = {
     },
     {
       questionNumber: "5",
+      criteria: [
+        { text: "Correctly represents the integer subtraction strategy", marks: 2 },
+        { text: "Identifies the final value", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        steps: [
+          { expression: "9 - 28", reason: "Start at 9 and move back 28" },
+          { expression: "9 - 9 = 0", reason: "Move back 9 to reach zero" },
+          { expression: "0 - 19 = -19", reason: "Move back the remaining 19" }
+        ],
+        finalAnswer: "∴ 9 - 28 = -19",
+        diagram: {
+          engine: "integer-number-line-solution",
+          config: {
+            title: "9 − 28",
+            xmin: -20,
+            xmax: 10,
+            tickStep: 1,
+            labels: [-19, 0, 9],
+            points: [
+              { x: 9, kind: "start", label: "9", dy: 42 },
+              { x: 0, kind: "end", label: "0", dy: 42 },
+              { x: -19, kind: "end", label: "-19", dy: 42 }
+            ],
+            jumps: [
+              { from: 9, to: 0, label: "-9" },
+              { from: 0, to: -19, label: "-19", height: 72 }
+            ],
+            answerMarker: {
+              x: -19,
+              text: "-19"
+            },
+            explanation: "Start at 9, move back 9 to 0, then move back 19 more."
+          }
+        },
+        notes: [
+          "This engine is designed for integer number-line explanations from Year 7–10 tasks."
+        ]
+      }
+    },
+    {
+      questionNumber: "6",
       criteria: [
         { text: "Provides correct solution", marks: 3 },
         { text: "Demonstrates understanding of conditional probability", marks: 2 },
