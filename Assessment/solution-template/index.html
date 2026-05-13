@@ -25,7 +25,9 @@ body{
     color:var(--text);
 }
 
-#app{ width:100%; }
+#app{
+    width:100%;
+}
 
 .page{
     width:210mm;
@@ -132,7 +134,9 @@ body{
     font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
 }
 
-.solution-step{ margin-bottom:8px; }
+.solution-step{
+    margin-bottom:8px;
+}
 
 .final-answer{
     margin-top:18px;
@@ -189,78 +193,80 @@ body{
     font-size:16px;
 }
 
-/* Algebra layout engine styles */
+/* Algebra Layout Engine */
 
-.algebra-layout {
-    width: 100%;
-    border: 2px solid #222;
-    background: #fff;
-    padding: 22px 26px;
-    margin-top: 18px;
+.algebra-layout{
+    width:100%;
+    border:2px solid #222;
+    background:#fff;
+    padding:22px 26px;
+    margin-top:18px;
 }
 
-.algebra-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 18px;
-    font-family: Arial, Helvetica, sans-serif;
+.algebra-title{
+    font-size:20px;
+    font-weight:700;
+    margin-bottom:18px;
+    font-family:Arial, Helvetica, sans-serif;
 }
 
-.algebra-steps {
-    display: grid;
-    gap: 8px;
+.algebra-steps{
+    display:grid;
+    gap:8px;
 }
 
-.algebra-row {
-    display: grid;
-    grid-template-columns: 38px 1fr 220px;
-    column-gap: 16px;
-    align-items: start;
-    padding: 6px 0;
-    border-bottom: 1px solid #e5e5e5;
+.algebra-row{
+    display:grid;
+    grid-template-columns:38px 1fr 220px;
+    column-gap:16px;
+    align-items:start;
+    padding:6px 0;
+    border-bottom:1px solid #e5e5e5;
 }
 
-.algebra-line-number {
-    font-size: 14px;
-    color: #666;
-    font-family: Arial, Helvetica, sans-serif;
-    padding-top: 5px;
+.algebra-line-number{
+    font-size:14px;
+    color:#666;
+    font-family:Arial, Helvetica, sans-serif;
+    padding-top:5px;
 }
 
-.algebra-expression {
-    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
-    font-size: 24px;
-    line-height: 1.6;
+.algebra-expression{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:24px;
+    line-height:1.6;
 }
 
-.algebra-reason {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    color: #444;
-    line-height: 1.5;
-    padding-top: 8px;
+.algebra-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    color:#444;
+    line-height:1.5;
+    padding-top:8px;
 }
 
-.algebra-final {
-    margin-top: 18px;
-    padding-top: 12px;
-    border-top: 2px solid #222;
-    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
-    font-size: 26px;
-    font-weight: 700;
+.algebra-final{
+    margin-top:18px;
+    padding-top:12px;
+    border-top:2px solid #222;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:26px;
+    font-weight:700;
 }
 
-.algebra-notes {
-    margin-top: 18px;
-    background: #f7f7f7;
-    border-left: 5px solid #777;
-    padding: 12px 16px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
+.algebra-notes{
+    margin-top:18px;
+    background:#f7f7f7;
+    border-left:5px solid #777;
+    padding:12px 16px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    line-height:1.6;
 }
 
-.algebra-note { margin-bottom: 4px; }
+.algebra-note{
+    margin-bottom:4px;
+}
 
 .footer{
     margin-top:60px;
@@ -272,7 +278,9 @@ body{
     color:#666;
 }
 
-.page-break{ break-before:page; }
+.page-break{
+    break-before:page;
+}
 
 @media print{
     body{
@@ -305,230 +313,10 @@ body{
 <script src="diagram-engines/number-line.js"></script>
 <script src="diagram-engines/integer-number-line-solution.js"></script>
 <script src="diagram-engines/probability-tree.js"></script>
+
 <script src="renderers/render-worked-solution.js"></script>
 
-<script>
-const workedSolutionData = {
-  documentTitle: "Worked Solution Template",
-  school: "CHHS",
-  course: "Mathematics Faculty",
-  year: "2026",
-  mode: "teacher",
-  questions: [
-    {
-      questionNumber: "1",
-      marksTotal: 3,
-      criteria: [
-        { text: "Provides correct solution", marks: 2 },
-        { text: "Shows correct algebraic working", marks: 1 }
-      ],
-      solution: {
-        type: "algebra",
-        algebraTitle: "Solving a linear equation",
-        steps: [
-          { expression: "3x + 7 = 22", reason: "Original equation" },
-          { expression: "3x = 15", reason: "Subtract 7 from both sides" },
-          { expression: "x = 5", reason: "Divide both sides by 3" }
-        ],
-        finalAnswer: "∴ x = 5",
-        notes: [
-          "Each line should show an equivalent equation.",
-          "The final answer should be clearly identified."
-        ]
-      }
-    },
-    {
-      questionNumber: "2",
-      criteria: [
-        { text: "Provides correct graph", marks: 2 },
-        { text: "Identifies key features of the graph", marks: 1 }
-      ],
-      solution: {
-        type: "diagram",
-        diagram: {
-          engine: "coordinate-graph",
-          config: {
-            title: "Graph of y = x² - 4",
-            xmin: -5,
-            xmax: 5,
-            ymin: -6,
-            ymax: 8,
-            gridStep: 1,
-            xTickStep: 1,
-            yTickStep: 2,
-            functions: [
-              {
-                label: "y = x² - 4",
-                labelX: 2.6,
-                fn: x => x * x - 4
-              }
-            ],
-            points: [
-              { x: -2, y: 0, label: "(-2, 0)", dx: -70, dy: -10 },
-              { x: 2, y: 0, label: "(2, 0)", dx: 10, dy: -10 },
-              { x: 0, y: -4, label: "(0, -4)", dx: 10, dy: 20 }
-            ]
-          }
-        }
-      }
-    },
-    {
-      questionNumber: "3",
-      pageBreakBefore: true,
-      criteria: [
-        { text: "Uses the diagram correctly", marks: 2 },
-        { text: "Identifies the required angle or side relationship", marks: 1 }
-      ],
-      solution: {
-        type: "diagram",
-        diagram: {
-          engine: "geometry-engine",
-          config: {
-            points: {
-              A: { x: 140, y: 340 },
-              B: { x: 620, y: 340 },
-              C: { x: 360, y: 90 }
-            },
-            shapes: [
-              { type: "polygon", points: ["A", "B", "C"], fill: false }
-            ],
-            labels: [
-              { point: "A", text: "A", dx: -20, dy: 28 },
-              { point: "B", text: "B", dx: 20, dy: 28 },
-              { point: "C", text: "C", dx: 0, dy: -18 },
-              { x: 360, y: 365, text: "12 cm", small: true },
-              { x: 230, y: 205, text: "10 cm", small: true },
-              { x: 505, y: 205, text: "x cm", small: true }
-            ],
-            angleMarks: [
-              { vertex: "A", from: "B", to: "C", label: "48°", r: 42, reflex: false }
-            ],
-            sideMarks: [
-              { from: "A", to: "C", count: 1 },
-              { from: "B", to: "C", count: 2 }
-            ]
-          }
-        }
-      }
-    },
-    {
-      questionNumber: "4",
-      criteria: [
-        { text: "Represents the calculation correctly on a number line", marks: 2 }
-      ],
-      solution: {
-        type: "diagram",
-        diagram: {
-          engine: "number-line",
-          config: {
-            xmin: -5,
-            xmax: 10,
-            tickStep: 1,
-            labelStep: 1,
-            points: [
-              { x: 2, label: "Start", dy: -22 },
-              { x: 7, label: "End", dy: -22 }
-            ],
-            jumps: [
-              { from: 2, to: 7, label: "+5" }
-            ]
-          }
-        }
-      }
-    },
-    {
-      questionNumber: "5",
-      criteria: [
-        { text: "Correctly represents the integer subtraction strategy", marks: 2 },
-        { text: "Identifies the final value", marks: 1 }
-      ],
-      solution: {
-        type: "mixed",
-        steps: [
-          { expression: "9 - 28", reason: "Start at 9 and move back 28" },
-          { expression: "9 - 9 = 0", reason: "Move back 9 to reach zero" },
-          { expression: "0 - 19 = -19", reason: "Move back the remaining 19" }
-        ],
-        finalAnswer: "∴ 9 - 28 = -19",
-        diagram: {
-          engine: "integer-number-line-solution",
-          config: {
-            title: "9 − 28",
-            xmin: -20,
-            xmax: 10,
-            tickStep: 1,
-            labels: [-19, 0, 9],
-            points: [
-              { x: 9, kind: "start", label: "9", dy: 42 },
-              { x: 0, kind: "end", label: "0", dy: 42 },
-              { x: -19, kind: "end", label: "-19", dy: 42 }
-            ],
-            jumps: [
-              { from: 9, to: 0, label: "-9" },
-              { from: 0, to: -19, label: "-19", height: 72 }
-            ],
-            answerMarker: {
-              x: -19,
-              text: "-19"
-            },
-            explanation: "Start at 9, move back 9 to 0, then move back 19 more."
-          }
-        },
-        notes: [
-          "This engine is designed for integer number-line explanations from Year 7–10 tasks."
-        ]
-      }
-    },
-    {
-      questionNumber: "6",
-      criteria: [
-        { text: "Provides correct solution", marks: 3 },
-        { text: "Demonstrates understanding of conditional probability", marks: 2 },
-        { text: "Correctly interprets the probabilities", marks: 1 }
-      ],
-      solution: {
-        type: "diagram",
-        diagram: {
-          engine: "probability-tree",
-          config: {
-            outcomes: [
-              {
-                label: "Amara",
-                probability: "1/6",
-                outcomes: [
-                  { label: "W", probability: "0.5" },
-                  { label: "W′", probability: "0.5" }
-                ]
-              },
-              {
-                label: "Bala",
-                probability: "1/3",
-                outcomes: [
-                  { label: "W", probability: "0.4" },
-                  { label: "W′", probability: "0.6" }
-                ]
-              },
-              {
-                label: "Cassie",
-                probability: "1/2",
-                outcomes: [
-                  { label: "W", probability: "0.2" },
-                  { label: "W′", probability: "0.8" }
-                ]
-              }
-            ]
-          }
-        }
-      },
-      teacherNotes: [
-        "This example demonstrates how the renderer calls the probability-tree engine from structured data."
-      ]
-    }
-  ]
-};
-
-renderWorkedSolution("app", workedSolutionData);
-</script>
+<script src="solution-data.js"></script>
 
 </body>
 </html>
