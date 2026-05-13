@@ -25,6 +25,10 @@ body{
     color:var(--text);
 }
 
+#app{
+    width:100%;
+}
+
 .page{
     width:210mm;
     min-height:297mm;
@@ -74,6 +78,15 @@ body{
     color:var(--heading);
 }
 
+.question-text{
+    font-size:17px;
+    line-height:1.6;
+    margin-bottom:18px;
+    background:#f8f8f8;
+    border-left:5px solid #999;
+    padding:12px 16px;
+}
+
 .criteria-table{
     width:100%;
     border-collapse:collapse;
@@ -108,6 +121,12 @@ body{
     margin-bottom:16px;
 }
 
+.solution-intro{
+    font-size:16px;
+    line-height:1.6;
+    margin-bottom:14px;
+}
+
 .solution-box{
     padding-left:10px;
     font-size:22px;
@@ -120,6 +139,20 @@ body{
 .final-answer{
     margin-top:18px;
     font-weight:bold;
+}
+
+.short-final-answer{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:26px;
+    font-weight:bold;
+    margin-top:18px;
+}
+
+.step-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:14px;
+    color:#555;
+    margin-left:18px;
 }
 
 .diagram-box{
@@ -145,6 +178,17 @@ body{
     padding:13px 16px;
     font-size:15px;
     line-height:1.7;
+}
+
+.teacher-note ul{
+    margin:8px 0 0 20px;
+    padding:0;
+}
+
+.missing-engine{
+    color:#900;
+    font-weight:bold;
+    font-size:16px;
 }
 
 /* Algebra layout engine styles */
@@ -259,282 +303,193 @@ body{
 
 <body>
 
-<div class="page">
-
-    <div class="header">
-        <div class="school-block">
-            <h1>CHHS</h1>
-            <h2>Worked Solution Template</h2>
-        </div>
-
-        <div class="meta">
-            Mathematics Faculty<br>
-            Assessment Solutions<br>
-            2026
-        </div>
-    </div>
-
-    <!-- ALGEBRA LAYOUT EXAMPLE -->
-
-    <section class="question-section">
-        <div class="question-title">Question 1 — Algebra Layout Engine</div>
-
-        <table class="criteria-table">
-            <tr>
-                <th>Criteria</th>
-                <th class="marks">Marks</th>
-            </tr>
-            <tr>
-                <td>Provides correct solution</td>
-                <td class="marks">2</td>
-            </tr>
-            <tr>
-                <td>Shows correct algebraic working</td>
-                <td class="marks">1</td>
-            </tr>
-        </table>
-
-        <div class="sample-answer-title">Sample answer:</div>
-
-        <div id="algebra-example"></div>
-    </section>
-
-    <!-- COORDINATE GRAPH EXAMPLE -->
-
-    <section class="question-section">
-        <div class="question-title">Question 2 — Coordinate Graph Engine</div>
-
-        <table class="criteria-table">
-            <tr>
-                <th>Criteria</th>
-                <th class="marks">Marks</th>
-            </tr>
-            <tr>
-                <td>Provides correct graph</td>
-                <td class="marks">2</td>
-            </tr>
-            <tr>
-                <td>Identifies key features of the graph</td>
-                <td class="marks">1</td>
-            </tr>
-        </table>
-
-        <div class="sample-answer-title">Sample answer:</div>
-
-        <div id="coordinate-graph-example" class="diagram-box large"></div>
-    </section>
-
-    <!-- GEOMETRY EXAMPLE -->
-
-    <section class="question-section page-break">
-        <div class="question-title">Question 3 — Geometry Engine</div>
-
-        <table class="criteria-table">
-            <tr>
-                <th>Criteria</th>
-                <th class="marks">Marks</th>
-            </tr>
-            <tr>
-                <td>Uses the diagram correctly</td>
-                <td class="marks">2</td>
-            </tr>
-            <tr>
-                <td>Identifies the required angle or side relationship</td>
-                <td class="marks">1</td>
-            </tr>
-        </table>
-
-        <div class="sample-answer-title">Sample answer:</div>
-
-        <div id="geometry-example" class="diagram-box large"></div>
-    </section>
-
-    <!-- NUMBER LINE EXAMPLE -->
-
-    <section class="question-section">
-        <div class="question-title">Question 4 — Number Line Engine</div>
-
-        <table class="criteria-table">
-            <tr>
-                <th>Criteria</th>
-                <th class="marks">Marks</th>
-            </tr>
-            <tr>
-                <td>Represents the calculation correctly on a number line</td>
-                <td class="marks">2</td>
-            </tr>
-        </table>
-
-        <div class="sample-answer-title">Sample answer:</div>
-
-        <div id="number-line-example" class="diagram-box"></div>
-    </section>
-
-    <!-- PROBABILITY TREE EXAMPLE -->
-
-    <section class="question-section">
-        <div class="question-title">Question 5 — Probability Tree Engine</div>
-
-        <table class="criteria-table">
-            <tr>
-                <th>Criteria</th>
-                <th class="marks">Marks</th>
-            </tr>
-            <tr>
-                <td>Provides correct solution</td>
-                <td class="marks">3</td>
-            </tr>
-            <tr>
-                <td>Demonstrates understanding of conditional probability</td>
-                <td class="marks">2</td>
-            </tr>
-            <tr>
-                <td>Correctly interprets the probabilities</td>
-                <td class="marks">1</td>
-            </tr>
-        </table>
-
-        <div class="sample-answer-title">Sample answer:</div>
-
-        <div id="probability-tree-example" class="diagram-box large"></div>
-    </section>
-
-    <div class="teacher-note">
-        <strong>Teacher note:</strong>
-        This index file is currently a demonstration page showing all available CHHS diagram engines.
-        Later, the same engines can be called selectively by an AI prompt to generate a clean worked solution.
-    </div>
-
-    <div class="footer">
-        <div>CHHS Mathematics Faculty</div>
-        <div>Generated Solution Template</div>
-    </div>
-
-</div>
+<div id="app"></div>
 
 <script src="diagram-engines/algebra-layout.js"></script>
 <script src="diagram-engines/coordinate-graph.js"></script>
 <script src="diagram-engines/geometry-engine.js"></script>
 <script src="diagram-engines/number-line.js"></script>
 <script src="diagram-engines/probability-tree.js"></script>
+<script src="renderers/render-worked-solution.js"></script>
 
 <script>
-renderAlgebraLayout("algebra-example", {
-  title: "Solving a linear equation",
-  steps: [
+const workedSolutionData = {
+  documentTitle: "Worked Solution Template",
+  school: "CHHS",
+  course: "Mathematics Faculty",
+  year: "2026",
+  mode: "teacher",
+  questions: [
     {
-      expression: "3x + 7 = 22",
-      reason: "Original equation"
+      questionNumber: "1",
+      marksTotal: 3,
+      criteria: [
+        { text: "Provides correct solution", marks: 2 },
+        { text: "Shows correct algebraic working", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Solving a linear equation",
+        steps: [
+          { expression: "3x + 7 = 22", reason: "Original equation" },
+          { expression: "3x = 15", reason: "Subtract 7 from both sides" },
+          { expression: "x = 5", reason: "Divide both sides by 3" }
+        ],
+        finalAnswer: "∴ x = 5",
+        notes: [
+          "Each line should show an equivalent equation.",
+          "The final answer should be clearly identified."
+        ]
+      }
     },
     {
-      expression: "3x = 15",
-      reason: "Subtract 7 from both sides"
+      questionNumber: "2",
+      criteria: [
+        { text: "Provides correct graph", marks: 2 },
+        { text: "Identifies key features of the graph", marks: 1 }
+      ],
+      solution: {
+        type: "diagram",
+        diagram: {
+          engine: "coordinate-graph",
+          config: {
+            title: "Graph of y = x² - 4",
+            xmin: -5,
+            xmax: 5,
+            ymin: -6,
+            ymax: 8,
+            gridStep: 1,
+            xTickStep: 1,
+            yTickStep: 2,
+            functions: [
+              {
+                label: "y = x² - 4",
+                labelX: 2.6,
+                fn: x => x * x - 4
+              }
+            ],
+            points: [
+              { x: -2, y: 0, label: "(-2, 0)", dx: -70, dy: -10 },
+              { x: 2, y: 0, label: "(2, 0)", dx: 10, dy: -10 },
+              { x: 0, y: -4, label: "(0, -4)", dx: 10, dy: 20 }
+            ]
+          }
+        }
+      }
     },
     {
-      expression: "x = 5",
-      reason: "Divide both sides by 3"
-    }
-  ],
-  finalAnswer: "∴ x = 5",
-  notes: [
-    "Each line should show an equivalent equation.",
-    "The final answer should be clearly identified."
-  ]
-});
-
-renderCoordinateGraph("coordinate-graph-example", {
-  title: "Graph of y = x² - 4",
-  xmin: -5,
-  xmax: 5,
-  ymin: -6,
-  ymax: 8,
-  gridStep: 1,
-  xTickStep: 1,
-  yTickStep: 2,
-  functions: [
+      questionNumber: "3",
+      pageBreakBefore: true,
+      criteria: [
+        { text: "Uses the diagram correctly", marks: 2 },
+        { text: "Identifies the required angle or side relationship", marks: 1 }
+      ],
+      solution: {
+        type: "diagram",
+        diagram: {
+          engine: "geometry-engine",
+          config: {
+            points: {
+              A: { x: 140, y: 340 },
+              B: { x: 620, y: 340 },
+              C: { x: 360, y: 90 }
+            },
+            shapes: [
+              { type: "polygon", points: ["A", "B", "C"], fill: false }
+            ],
+            labels: [
+              { point: "A", text: "A", dx: -20, dy: 28 },
+              { point: "B", text: "B", dx: 20, dy: 28 },
+              { point: "C", text: "C", dx: 0, dy: -18 },
+              { x: 360, y: 365, text: "12 cm", small: true },
+              { x: 230, y: 205, text: "10 cm", small: true },
+              { x: 505, y: 205, text: "x cm", small: true }
+            ],
+            angleMarks: [
+              { vertex: "A", from: "B", to: "C", label: "48°", r: 42, reflex: false }
+            ],
+            sideMarks: [
+              { from: "A", to: "C", count: 1 },
+              { from: "B", to: "C", count: 2 }
+            ]
+          }
+        }
+      }
+    },
     {
-      label: "y = x² - 4",
-      labelX: 2.6,
-      fn: x => x * x - 4
-    }
-  ],
-  points: [
-    { x: -2, y: 0, label: "(-2, 0)", dx: -70, dy: -10 },
-    { x: 2, y: 0, label: "(2, 0)", dx: 10, dy: -10 },
-    { x: 0, y: -4, label: "(0, -4)", dx: 10, dy: 20 }
-  ]
-});
-
-renderGeometryDiagram("geometry-example", {
-  points: {
-    A: { x: 140, y: 340 },
-    B: { x: 620, y: 340 },
-    C: { x: 360, y: 90 }
-  },
-  shapes: [
-    { type: "polygon", points: ["A", "B", "C"], fill: false }
-  ],
-  labels: [
-    { point: "A", text: "A", dx: -20, dy: 28 },
-    { point: "B", text: "B", dx: 20, dy: 28 },
-    { point: "C", text: "C", dx: 0, dy: -18 },
-    { x: 360, y: 365, text: "12 cm", small: true },
-    { x: 230, y: 205, text: "10 cm", small: true },
-    { x: 505, y: 205, text: "x cm", small: true }
-  ],
-  angleMarks: [
-    { vertex: "A", from: "B", to: "C", label: "48°", r: 42, reflex: false }
-  ],
-  sideMarks: [
-    { from: "A", to: "C", count: 1 },
-    { from: "B", to: "C", count: 2 }
-  ]
-});
-
-renderNumberLine("number-line-example", {
-  xmin: -5,
-  xmax: 10,
-  tickStep: 1,
-  labelStep: 1,
-  points: [
-    { x: 2, label: "Start", dy: -22 },
-    { x: 7, label: "End", dy: -22 }
-  ],
-  jumps: [
-    { from: 2, to: 7, label: "+5" }
-  ]
-});
-
-renderProbabilityTree("probability-tree-example", {
-  outcomes: [
+      questionNumber: "4",
+      criteria: [
+        { text: "Represents the calculation correctly on a number line", marks: 2 }
+      ],
+      solution: {
+        type: "diagram",
+        diagram: {
+          engine: "number-line",
+          config: {
+            xmin: -5,
+            xmax: 10,
+            tickStep: 1,
+            labelStep: 1,
+            points: [
+              { x: 2, label: "Start", dy: -22 },
+              { x: 7, label: "End", dy: -22 }
+            ],
+            jumps: [
+              { from: 2, to: 7, label: "+5" }
+            ]
+          }
+        }
+      }
+    },
     {
-      label: "Amara",
-      probability: "1/6",
-      outcomes: [
-        { label: "W", probability: "0.5" },
-        { label: "W′", probability: "0.5" }
+      questionNumber: "5",
+      criteria: [
+        { text: "Provides correct solution", marks: 3 },
+        { text: "Demonstrates understanding of conditional probability", marks: 2 },
+        { text: "Correctly interprets the probabilities", marks: 1 }
+      ],
+      solution: {
+        type: "diagram",
+        diagram: {
+          engine: "probability-tree",
+          config: {
+            outcomes: [
+              {
+                label: "Amara",
+                probability: "1/6",
+                outcomes: [
+                  { label: "W", probability: "0.5" },
+                  { label: "W′", probability: "0.5" }
+                ]
+              },
+              {
+                label: "Bala",
+                probability: "1/3",
+                outcomes: [
+                  { label: "W", probability: "0.4" },
+                  { label: "W′", probability: "0.6" }
+                ]
+              },
+              {
+                label: "Cassie",
+                probability: "1/2",
+                outcomes: [
+                  { label: "W", probability: "0.2" },
+                  { label: "W′", probability: "0.8" }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      teacherNotes: [
+        "This example demonstrates how the renderer calls the probability-tree engine from structured data."
       ]
-    },
-    {
-      label: "Bala",
-      probability: "1/3",
-      outcomes: [
-        { label: "W", probability: "0.4" },
-        { label: "W′", probability: "0.6" }
-      ]
-    },
-    {
-      label: "Cassie",
-      probability: "1/2",
-      outcomes: [
-        { label: "W", probability: "0.2" },
-        { label: "W′", probability: "0.8" }
-      ]
     }
   ]
-});
+};
 
-console.log("CHHS Solution Template Loaded");
+renderWorkedSolution("app", workedSolutionData);
 </script>
 
 </body>
