@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<!--
+CHHS Renderer Template
+Version: 1.2 Compact Full Template
+Renderer Architecture Protected
+Only replace the workedSolutionData block between the START and END markers.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CHHS Worked Solution Template</title>
+
+<style>
+:root{
+    --border:#444;
+    --light:#f5f5f5;
+    --heading:#111;
+    --text:#222;
+    --accent:#0b57d0;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    padding:40px;
+    background:#dfe6ec;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+}
+
+#app{ width:100%; }
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:20mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #222;
+    padding-bottom:12px;
+    margin-bottom:22px;
+}
+
+.school-block h1{
+    margin:0;
+    font-size:30px;
+    letter-spacing:1px;
+    color:var(--accent);
+}
+
+.school-block h2{
+    margin:5px 0 0 0;
+    font-size:16px;
+    font-weight:500;
+}
+
+.meta{
+    text-align:right;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.question-section{
+    margin-bottom:34px;
+    break-inside:avoid;
+}
+
+.question-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--heading);
+}
+
+.question-text{
+    font-size:14px;
+    line-height:1.45;
+    margin-bottom:10px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+}
+
+.criteria-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:12px;
+}
+
+.criteria-table th{
+    border:1.5px solid var(--border);
+    background:#f1f1f1;
+    padding:6px 8px;
+    font-size:14px;
+    text-align:left;
+}
+
+.criteria-table td{
+    border:1.5px solid var(--border);
+    padding:6px 8px;
+    font-size:13px;
+    vertical-align:top;
+}
+
+.criteria-table .marks{
+    width:80px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.sample-answer-title{
+    font-size:15px;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.solution-intro{
+    font-size:13px;
+    line-height:1.45;
+    margin-bottom:8px;
+}
+
+.solution-box{
+    padding-left:6px;
+    font-size:15px;
+    line-height:1.6;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+}
+
+.solution-step{ margin-bottom:5px; }
+
+.final-answer{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.short-final-answer{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.step-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#555;
+    margin-left:10px;
+}
+
+.diagram-box{
+    width:100%;
+    min-height:210px;
+    margin-top:10px;
+    border:1.2px solid #bbb;
+    background:#fff;
+    padding:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.diagram-box.large{
+    min-height:270px;
+}
+
+.teacher-note{
+    margin-top:12px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.teacher-note ul{
+    margin:5px 0 0 16px;
+    padding:0;
+}
+
+.missing-engine{
+    color:#900;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* Algebra layout engine styles */
+
+.algebra-layout {
+    width: 100%;
+    border: 1.5px solid #222;
+    background: #fff;
+    padding: 10px 14px;
+    margin-top: 10px;
+}
+
+.algebra-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.algebra-steps {
+    display: grid;
+    gap: 2px;
+}
+
+.algebra-row {
+    display: grid;
+    grid-template-columns: 26px 1fr 165px;
+    column-gap: 9px;
+    align-items: start;
+    padding: 2px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.algebra-line-number {
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 2px;
+}
+
+.algebra-expression {
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.algebra-reason {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #444;
+    line-height: 1.35;
+    padding-top: 3px;
+}
+
+.algebra-final {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1.5px solid #222;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.algebra-notes {
+    margin-top: 10px;
+    background: #f7f7f7;
+    border-left: 4px solid #777;
+    padding: 8px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.algebra-note { margin-bottom: 3px; }
+
+/* Grouped subpart support */
+
+.part{
+    margin-top:12px;
+    padding-top:8px;
+    border-top:1px dashed #bbb;
+}
+
+.part-label{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:5px;
+    color:var(--heading);
+}
+
+.part-question-text{
+    font-size:13px;
+    line-height:1.35;
+    margin-bottom:7px;
+}
+
+.compact-note{
+    font-size:11px;
+    color:#555;
+    margin-top:4px;
+}
+
+.footer{
+    margin-top:40px;
+    border-top:1.5px solid #222;
+    padding-top:8px;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+}
+
+.page-break{ break-before:page; }
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        width:100%;
+        min-height:auto;
+        box-shadow:none;
+        margin:0;
+        padding:13mm;
+    }
+
+    .question-section{
+        break-inside:avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script src="diagram-engines/algebra-layout.js"></script>
+<script src="diagram-engines/coordinate-graph.js"></script>
+<script src="diagram-engines/box-plot.js"></script>
+<script src="diagram-engines/geometry-engine.js"></script>
+<script src="diagram-engines/network-graph.js"></script>
+<script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/integer-number-line-solution.js"></script>
+<script src="diagram-engines/probability-tree.js"></script>
+<script src="renderers/render-worked-solution.js"></script>
+
+<script>
+
+/* WORKED_SOLUTION_DATA_START */
+
+const workedSolutionData = {
+  documentTitle: "Statistics and Networks Gold Standard Exemplar",
+  school: "CHHS",
+  course: "Mathematics Faculty",
+  year: "Renderer Example",
+  mode: "teacher",
+  assessmentMode: "compact",
+  questions: [
+    {
+      questionNumber: "1",
+      questionText: "Probability tree. A bag contains 9 red apples and 8 green apples. Two apples are selected without replacement. Find the probability that both apples are the same colour.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 3 },
+        { text: "• Provides correct probability tree diagram, or equivalent merit", marks: 2 },
+        { text: "• Draws a relevant tree diagram, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Same colour probability",
+        steps: [
+          { expression: "P(same colour) = P(RR) + P(GG)", reason: "Same colour means red-red or green-green" },
+          { expression: "= 9/17 × 8/16 + 8/17 × 7/16", reason: "Draws are without replacement" },
+          { expression: "= 72/272 + 56/272", reason: "Multiply each branch" },
+          { expression: "= 128/272", reason: "Add favourable outcomes" },
+          { expression: "= 8/17", reason: "Simplify" }
+        ],
+        finalAnswer: "8/17",
+        diagram: {
+          engine: "probability-tree",
+          config: {
+            title: "Two apples without replacement",
+            outcomes: [
+              {
+                label: "Red",
+                probability: "9/17",
+                outcomes: [
+                  { label: "Red", probability: "8/16" },
+                  { label: "Green", probability: "8/16" }
+                ]
+              },
+              {
+                label: "Green",
+                probability: "8/17",
+                outcomes: [
+                  { label: "Red", probability: "9/16" },
+                  { label: "Green", probability: "7/16" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "2",
+      questionText: "Comparing distributions. The box plots compare the number of goals scored by Team A and Team B. Compare central tendency, spread and skewness.",
+      marksTotal: 5,
+      criteria: [
+        { text: "• Provides correct box-plot AND comparisons of central tendency, spread and skewness", marks: 5 },
+        { text: "• Provides correct box-plot AND compares two of central tendency, spread and skewness", marks: 4 },
+        { text: "• Provides correct box-plot AND compares one of central tendency, spread and skewness", marks: 3 },
+        { text: "• Provides correct box-plot OR compares two of central tendency, spread and skewness", marks: 2 },
+        { text: "• Provides one correct quartile or correct comparison of minimum or maximum scores", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Distribution comparison",
+        steps: [
+          { expression: "Team A median = 26, Team B median = 27", reason: "Compare central tendency" },
+          { expression: "Team A IQR = 27 − 23 = 4", reason: "Measure middle spread" },
+          { expression: "Team B IQR = 31 − 24 = 7", reason: "Measure middle spread" },
+          { expression: "Team B generally scores more goals", reason: "Its median is higher" },
+          { expression: "Team A is more consistent", reason: "Its IQR is smaller" },
+          { expression: "Team A is negatively skewed; Team B is slightly positively skewed", reason: "Compare whiskers and median positions" }
+        ],
+        finalAnswer: "Team B generally scores higher; Team A is more consistent.",
+        diagrams: [
+          {
+            engine: "box-plot",
+            config: {
+              title: "Team A",
+              min: 19,
+              q1: 23,
+              median: 26,
+              q3: 27,
+              max: 28,
+              scaleMin: 16,
+              scaleMax: 37,
+              step: 1,
+              axisLabel: "Number of goals"
+            }
+          },
+          {
+            engine: "box-plot",
+            config: {
+              title: "Team B",
+              min: 21,
+              q1: 24,
+              median: 27,
+              q3: 31,
+              max: 35,
+              scaleMin: 16,
+              scaleMax: 37,
+              step: 1,
+              axisLabel: "Number of goals"
+            }
+          }
+        ]
+      }
+    },
+    {
+      questionNumber: "3",
+      questionText: "Scatterplot and line of best fit. Use the graph to show the relationship between hours of phone use and hours of sleep per day.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Plots both points correctly", marks: 2 },
+        { text: "• Plots one point correctly, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Scatterplot interpretation",
+        steps: [
+          { expression: "The line slopes down from left to right", reason: "The association is negative" },
+          { expression: "As phone use increases, sleep tends to decrease", reason: "Interpret the trend" }
+        ],
+        finalAnswer: "Negative association",
+        diagram: {
+          engine: "coordinate-graph",
+          config: {
+            title: "Hours of sleep vs phone use",
+            xmin: 0,
+            xmax: 10,
+            ymin: 4,
+            ymax: 11,
+            gridStep: 1,
+            xTickStep: 1,
+            yTickStep: 1,
+            xLabel: "Hours of phone use per day",
+            yLabel: "Hours of sleep per day",
+            lines: [
+              { equation: "y=-0.55*x+10" }
+            ],
+            points: [
+              { x: 0, y: 10, label: "" },
+              { x: 0.5, y: 9.7, label: "" },
+              { x: 0.7, y: 10.0, label: "" },
+              { x: 1, y: 9.5, label: "" },
+              { x: 1.5, y: 9.5, label: "" },
+              { x: 2.5, y: 8.2, label: "" },
+              { x: 2.5, y: 8.8, label: "" },
+              { x: 3, y: 8.5, label: "" },
+              { x: 3, y: 8.2, label: "" },
+              { x: 3.5, y: 7.8, label: "" },
+              { x: 4, y: 8.0, label: "×" },
+              { x: 4.5, y: 7.5, label: "" },
+              { x: 5, y: 7.2, label: "" },
+              { x: 5.5, y: 7.0, label: "" },
+              { x: 6, y: 6.8, label: "" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "4",
+      questionText: "Normal distribution. A score of 70 comes from a distribution with mean 58 and standard deviation 15. Find the percentage between the mean and this score.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Provides correct solution, including a correct z-score", marks: 2 },
+        { text: "• Finds z-score corresponding to 70, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "z-score",
+        steps: [
+          { expression: "z = (70 − 58) ÷ 15", reason: "Use z = (x − μ) ÷ σ" },
+          { expression: "= 0.8", reason: "Calculate z-score" },
+          { expression: "P from table = 0.7881", reason: "Use z = 0.8" },
+          { expression: "P required = 0.7881 − 0.5", reason: "Area between the mean and z = 0.8" },
+          { expression: "= 0.2881", reason: "Subtract" },
+          { expression: "∴ 28.81%", reason: "Convert to percentage" }
+        ],
+        finalAnswer: "28.81%"
+      }
+    },
+    {
+      questionNumber: "5",
+      questionText: "Network spanning tree. Draw a spanning tree and find its total weight.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Provides correct solution", marks: 2 },
+        { text: "• Draws a spanning tree, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Spanning tree weight",
+        steps: [
+          { expression: "Weight = 2 + 4 + 1 + 2 + 3 + 1 + 4 + 4 + 3", reason: "Add the selected edge weights" },
+          { expression: "= 24", reason: "Calculate total weight" }
+        ],
+        finalAnswer: "Weight = 24",
+        diagram: {
+          engine: "network-graph",
+          config: {
+            title: "Spanning tree",
+            height: 430,
+            nodeRadius: 5,
+            nodes: [
+              { id: "E", x: 80, y: 210, dx: -12, dy: 20 },
+              { id: "A", x: 170, y: 155 },
+              { id: "B", x: 340, y: 140 },
+              { id: "F", x: 350, y: 205, dx: -10, dy: 20 },
+              { id: "C", x: 450, y: 165 },
+              { id: "G", x: 380, y: 330, dx: -12, dy: 20 },
+              { id: "H", x: 455, y: 350, dx: -12, dy: 20 },
+              { id: "I", x: 480, y: 405, dx: -10, dy: 22 },
+              { id: "J", x: 630, y: 330, dx: 12, dy: 18 },
+              { id: "D", x: 680, y: 135, dx: 12, dy: 0 }
+            ],
+            edges: [
+              { from: "E", to: "A", label: "2" },
+              { from: "A", to: "B", label: "4" },
+              { from: "B", to: "F", label: "1" },
+              { from: "F", to: "C", label: "2" },
+              { from: "F", to: "G", label: "3" },
+              { from: "G", to: "H", label: "1" },
+              { from: "H", to: "J", label: "4" },
+              { from: "J", to: "D", label: "4" },
+              { from: "H", to: "I", label: "3" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "6",
+      questionText: "Network flow. The diagram shows possible paths through a network. Identify the route ACEG and list four edges that leave the network.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Identifies route ACEG and four relevant outgoing edges", marks: 3 },
+        { text: "• Identifies route ACEG or at least two relevant outgoing edges", marks: 2 },
+        { text: "• Identifies one relevant path or edge", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Network interpretation",
+        steps: [
+          { expression: "Route = ACEG", reason: "Follow connected vertices in order" },
+          { expression: "Edges leaving the network: DE, CF, DG, FG", reason: "List the relevant directed/connected edges" }
+        ],
+        finalAnswer: "Route ACEG; edges DE, CF, DG, FG",
+        diagram: {
+          engine: "network-graph",
+          config: {
+            title: "Network paths",
+            height: 390,
+            nodes: [
+              { id: "A", x: 85, y: 210, highlight: true, dx: -16, dy: 5 },
+              { id: "B", x: 225, y: 95 },
+              { id: "C", x: 225, y: 210, highlight: true },
+              { id: "D", x: 225, y: 325 },
+              { id: "E", x: 405, y: 140, highlight: true },
+              { id: "F", x: 405, y: 280 },
+              { id: "G", x: 610, y: 210, highlight: true, dx: 16, dy: 5 }
+            ],
+            edges: [
+              { from: "A", to: "B", label: "12" },
+              { from: "A", to: "C", label: "16", highlight: true },
+              { from: "A", to: "D", label: "11" },
+              { from: "B", to: "E", label: "10" },
+              { from: "C", to: "E", label: "15", highlight: true },
+              { from: "C", to: "F", label: "13" },
+              { from: "D", to: "E", label: "5" },
+              { from: "D", to: "F", label: "12" },
+              { from: "D", to: "G", label: "9" },
+              { from: "E", to: "G", label: "16", highlight: true },
+              { from: "F", to: "G", label: "20" }
+            ],
+            annotations: [
+              { type: "boxLabel", x: 35, y: 188, width: 58, height: 28, text: "Entry" },
+              { type: "boxLabel", x: 622, y: 188, width: 58, height: 28, text: "Exit" }
+            ]
+          }
+        }
+      }
+    }
+  ]
+};
+
+/* WORKED_SOLUTION_DATA_END */
+
+/* Renderer controls all layout, typography, pagination and diagrams. */
+renderWorkedSolution("app", workedSolutionData);
+</script>
+
+</body>
+</html>

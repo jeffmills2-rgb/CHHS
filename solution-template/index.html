@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<!--
+CHHS Renderer Template
+Version: 1.2 Compact Full Template
+Renderer Architecture Protected
+Only replace the workedSolutionData block between the START and END markers.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CHHS Worked Solution Template</title>
+
+<style>
+:root{
+    --border:#444;
+    --light:#f5f5f5;
+    --heading:#111;
+    --text:#222;
+    --accent:#0b57d0;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    padding:40px;
+    background:#dfe6ec;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+}
+
+#app{ width:100%; }
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:20mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #222;
+    padding-bottom:12px;
+    margin-bottom:22px;
+}
+
+.school-block h1{
+    margin:0;
+    font-size:30px;
+    letter-spacing:1px;
+    color:var(--accent);
+}
+
+.school-block h2{
+    margin:5px 0 0 0;
+    font-size:16px;
+    font-weight:500;
+}
+
+.meta{
+    text-align:right;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.question-section{
+    margin-bottom:34px;
+    break-inside:avoid;
+}
+
+.question-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--heading);
+}
+
+.question-text{
+    font-size:14px;
+    line-height:1.45;
+    margin-bottom:10px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+}
+
+.criteria-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:12px;
+}
+
+.criteria-table th{
+    border:1.5px solid var(--border);
+    background:#f1f1f1;
+    padding:6px 8px;
+    font-size:14px;
+    text-align:left;
+}
+
+.criteria-table td{
+    border:1.5px solid var(--border);
+    padding:6px 8px;
+    font-size:13px;
+    vertical-align:top;
+}
+
+.criteria-table .marks{
+    width:80px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.sample-answer-title{
+    font-size:15px;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.solution-intro{
+    font-size:13px;
+    line-height:1.45;
+    margin-bottom:8px;
+}
+
+.solution-box{
+    padding-left:6px;
+    font-size:15px;
+    line-height:1.6;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+}
+
+.solution-step{ margin-bottom:5px; }
+
+.final-answer{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.short-final-answer{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.step-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#555;
+    margin-left:10px;
+}
+
+.diagram-box{
+    width:100%;
+    min-height:210px;
+    margin-top:10px;
+    border:1.2px solid #bbb;
+    background:#fff;
+    padding:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.diagram-box.large{
+    min-height:270px;
+}
+
+.teacher-note{
+    margin-top:12px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.teacher-note ul{
+    margin:5px 0 0 16px;
+    padding:0;
+}
+
+.missing-engine{
+    color:#900;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* Algebra layout engine styles */
+
+.algebra-layout {
+    width: 100%;
+    border: 1.5px solid #222;
+    background: #fff;
+    padding: 10px 14px;
+    margin-top: 10px;
+}
+
+.algebra-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.algebra-steps {
+    display: grid;
+    gap: 2px;
+}
+
+.algebra-row {
+    display: grid;
+    grid-template-columns: 26px 1fr 165px;
+    column-gap: 9px;
+    align-items: start;
+    padding: 2px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.algebra-line-number {
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 2px;
+}
+
+.algebra-expression {
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.algebra-reason {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #444;
+    line-height: 1.35;
+    padding-top: 3px;
+}
+
+.algebra-final {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1.5px solid #222;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.algebra-notes {
+    margin-top: 10px;
+    background: #f7f7f7;
+    border-left: 4px solid #777;
+    padding: 8px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.algebra-note { margin-bottom: 3px; }
+
+/* Grouped subpart support */
+
+.part{
+    margin-top:12px;
+    padding-top:8px;
+    border-top:1px dashed #bbb;
+}
+
+.part-label{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:5px;
+    color:var(--heading);
+}
+
+.part-question-text{
+    font-size:13px;
+    line-height:1.35;
+    margin-bottom:7px;
+}
+
+.compact-note{
+    font-size:11px;
+    color:#555;
+    margin-top:4px;
+}
+
+.footer{
+    margin-top:40px;
+    border-top:1.5px solid #222;
+    padding-top:8px;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+}
+
+.page-break{ break-before:page; }
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        width:100%;
+        min-height:auto;
+        box-shadow:none;
+        margin:0;
+        padding:13mm;
+    }
+
+    .question-section{
+        break-inside:avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script src="diagram-engines/algebra-layout.js"></script>
+<script src="diagram-engines/coordinate-graph.js"></script>
+<script src="diagram-engines/box-plot.js"></script>
+<script src="diagram-engines/geometry-engine.js"></script>
+<script src="diagram-engines/network-graph.js"></script>
+<script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/integer-number-line-solution.js"></script>
+<script src="diagram-engines/probability-tree.js"></script>
+<script src="renderers/render-worked-solution.js"></script>
+
+<script>
+
+/* WORKED_SOLUTION_DATA_START */
+
+const workedSolutionData = {
+  documentTitle: "Worked Solution Template",
+  school: "CHHS",
+  course: "Mathematics Faculty",
+  year: "2026",
+  mode: "teacher",
+  assessmentMode: "compact",
+  questions: []
+};
+
+/* WORKED_SOLUTION_DATA_END */
+
+/* Renderer controls all layout, typography, pagination and diagrams. */
+renderWorkedSolution("app", workedSolutionData);
+</script>
+
+</body>
+</html>

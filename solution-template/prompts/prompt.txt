@@ -1,0 +1,33 @@
+Generate a complete replacement index.html for this assessment using the uploaded live renderer template.
+
+Important:
+- preserve the uploaded index.html EXACTLY
+- replace ONLY the content between:
+
+WORKED_SOLUTION_DATA_START
+
+and
+
+WORKED_SOLUTION_DATA_END
+
+- use compact assessment rendering
+- strongly prefer grouped parts[] structures
+- minimise repeated criteria tables
+- follow the uploaded gold-standard exemplars closely
+- use approved engines only
+- prefer stable/simple engine configs
+- include diagrams whenever they improve clarity
+- use algebra-layout for structured calculations
+- use box-plot for box-and-whisker plots
+- use probability-tree for probability diagrams
+- use coordinate-graph for graphs and scatterplots
+- use geometry-engine for geometry/trigonometry
+- use network-graph for network questions
+- use plain Unicode maths only
+- do NOT generate SVG manually
+- do NOT rewrite layout/CSS/imports/scripts
+- keep pagination compact and printable
+- preserve renderer compatibility at all times
+
+Return ONE downloadable .html file only.
+Do not paste HTML into the chat.

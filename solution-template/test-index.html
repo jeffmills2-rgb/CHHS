@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!--
+CHHS Renderer Template
+Version: 1.2 Compact Full Template
+Renderer Architecture Protected
+Only replace the workedSolutionData block between the START and END markers.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CHHS Worked Solution Template</title>
+
+<style>
+:root{
+    --border:#444;
+    --light:#f5f5f5;
+    --heading:#111;
+    --text:#222;
+    --accent:#0b57d0;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    padding:40px;
+    background:#dfe6ec;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+}
+
+#app{ width:100%; }
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:20mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #222;
+    padding-bottom:12px;
+    margin-bottom:22px;
+}
+
+.school-block h1{
+    margin:0;
+    font-size:30px;
+    letter-spacing:1px;
+    color:var(--accent);
+}
+
+.school-block h2{
+    margin:5px 0 0 0;
+    font-size:16px;
+    font-weight:500;
+}
+
+.meta{
+    text-align:right;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.question-section{
+    margin-bottom:34px;
+    break-inside:avoid;
+}
+
+.question-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--heading);
+}
+
+.question-text{
+    font-size:14px;
+    line-height:1.45;
+    margin-bottom:10px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+}
+
+.criteria-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:12px;
+}
+
+.criteria-table th{
+    border:1.5px solid var(--border);
+    background:#f1f1f1;
+    padding:6px 8px;
+    font-size:14px;
+    text-align:left;
+}
+
+.criteria-table td{
+    border:1.5px solid var(--border);
+    padding:6px 8px;
+    font-size:13px;
+    vertical-align:top;
+}
+
+.criteria-table .marks{
+    width:80px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.sample-answer-title{
+    font-size:15px;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.solution-intro{
+    font-size:13px;
+    line-height:1.45;
+    margin-bottom:8px;
+}
+
+.solution-box{
+    padding-left:6px;
+    font-size:15px;
+    line-height:1.6;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+}
+
+.solution-step{ margin-bottom:5px; }
+
+.final-answer{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.short-final-answer{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.step-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#555;
+    margin-left:10px;
+}
+
+.diagram-box{
+    width:100%;
+    min-height:210px;
+    margin-top:10px;
+    border:1.2px solid #bbb;
+    background:#fff;
+    padding:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.diagram-box.large{
+    min-height:270px;
+}
+
+.teacher-note{
+    margin-top:12px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.teacher-note ul{
+    margin:5px 0 0 16px;
+    padding:0;
+}
+
+.missing-engine{
+    color:#900;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* Algebra layout engine styles */
+
+.algebra-layout {
+    width: 100%;
+    border: 1.5px solid #222;
+    background: #fff;
+    padding: 10px 14px;
+    margin-top: 10px;
+}
+
+.algebra-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.algebra-steps {
+    display: grid;
+    gap: 2px;
+}
+
+.algebra-row {
+    display: grid;
+    grid-template-columns: 26px 1fr 165px;
+    column-gap: 9px;
+    align-items: start;
+    padding: 2px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.algebra-line-number {
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 2px;
+}
+
+.algebra-expression {
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.algebra-reason {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #444;
+    line-height: 1.35;
+    padding-top: 3px;
+}
+
+.algebra-final {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1.5px solid #222;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.algebra-notes {
+    margin-top: 10px;
+    background: #f7f7f7;
+    border-left: 4px solid #777;
+    padding: 8px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.algebra-note { margin-bottom: 3px; }
+
+/* Grouped subpart support */
+
+.part{
+    margin-top:12px;
+    padding-top:8px;
+    border-top:1px dashed #bbb;
+}
+
+.part-label{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:5px;
+    color:var(--heading);
+}
+
+.part-question-text{
+    font-size:13px;
+    line-height:1.35;
+    margin-bottom:7px;
+}
+
+.compact-note{
+    font-size:11px;
+    color:#555;
+    margin-top:4px;
+}
+
+.footer{
+    margin-top:40px;
+    border-top:1.5px solid #222;
+    padding-top:8px;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+}
+
+.page-break{ break-before:page; }
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        width:100%;
+        min-height:auto;
+        box-shadow:none;
+        margin:0;
+        padding:13mm;
+    }
+
+    .question-section{
+        break-inside:avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script src="diagram-engines/algebra-layout.js"></script>
+<script src="diagram-engines/coordinate-graph.js"></script>
+<script src="diagram-engines/box-plot.js"></script>
+<script src="diagram-engines/geometry-engine.js"></script>
+<script src="diagram-engines/network-graph.js"></script>
+<script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/integer-number-line-solution.js"></script>
+<script src="diagram-engines/probability-tree.js"></script>
+<script src="renderers/render-worked-solution.js"></script>
+
+<script>
+
+/* WORKED_SOLUTION_DATA_START */
+
+const workedSolutionData = {
+  documentTitle: "Year 8 Yearly Assessment Task 2016 Worked Solutions",
+  school: "CHHS",
+  course: "Mathematics Faculty",
+  year: "2016",
+  mode: "teacher",
+  assessmentMode: "compact",
+  questions: [
+    {
+      questionNumber: "1",
+      questionText: "Express each ratio in simplest form.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Correctly simplifies both ratios", marks: 2 },
+        { text: "• Correctly simplifies one ratio", marks: 1 }
+      ],
+      parts: [
+        {
+          partLabel: "a",
+          questionText: "8 : 16",
+          marksTotal: 1,
+          criteria: [],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Simplify the ratio",
+            steps: [
+              { expression: "8 : 16", reason: "Start with the given ratio" },
+              { expression: "= 8÷8 : 16÷8", reason: "Divide both parts by the highest common factor, 8" },
+              { expression: "= 1 : 2", reason: "Simplify" }
+            ],
+            finalAnswer: "1 : 2"
+          }
+        },
+        {
+          partLabel: "b",
+          questionText: "$2 : 60 cents",
+          marksTotal: 1,
+          criteria: [],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Convert units first",
+            steps: [
+              { expression: "$2 = 200 cents", reason: "Use the same units" },
+              { expression: "200 : 60", reason: "Write the ratio in cents" },
+              { expression: "= 200÷20 : 60÷20", reason: "Divide both parts by 20" },
+              { expression: "= 10 : 3", reason: "Simplify" }
+            ],
+            finalAnswer: "10 : 3"
+          }
+        }
+      ]
+    },
+    {
+      questionNumber: "2",
+      questionText: "Divide $420 into the ratio 5:2.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Correctly finds both shares", marks: 2 },
+        { text: "• Correctly finds the value of one part", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Ratio sharing",
+        steps: [
+          { expression: "Total parts = 5 + 2", reason: "Add the ratio parts" },
+          { expression: "= 7", reason: "Calculate total number of equal parts" },
+          { expression: "One part = $420 ÷ 7", reason: "Divide the total by the number of parts" },
+          { expression: "= $60", reason: "Calculate one part" },
+          { expression: "First share = 5 × $60 = $300", reason: "Multiply by 5 parts" },
+          { expression: "Second share = 2 × $60 = $120", reason: "Multiply by 2 parts" }
+        ],
+        finalAnswer: "$300 and $120"
+      }
+    },
+    {
+      questionNumber: "3",
+      questionText: "A cyclist riding at 12 km/h completes a race in 4 hours and 30 minutes. What is the distance of the race?",
+      marksTotal: 1,
+      criteria: [
+        { text: "• Correct distance with units", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Distance from speed and time",
+        steps: [
+          { expression: "4 h 30 min = 4.5 h", reason: "Convert time to hours" },
+          { expression: "Distance = speed × time", reason: "Use d = st" },
+          { expression: "= 12 × 4.5", reason: "Substitute values" },
+          { expression: "= 54 km", reason: "Calculate" }
+        ],
+        finalAnswer: "54 km"
+      }
+    },
+    {
+      questionNumber: "4",
+      questionText: "Find the speed of a boat if it travels 240 km in 4 hours.",
+      marksTotal: 1,
+      criteria: [
+        { text: "• Correct speed with units", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Speed from distance and time",
+        steps: [
+          { expression: "Speed = distance ÷ time", reason: "Use s = d ÷ t" },
+          { expression: "= 240 ÷ 4", reason: "Substitute values" },
+          { expression: "= 60 km/h", reason: "Calculate" }
+        ],
+        finalAnswer: "60 km/h"
+      }
+    },
+    {
+      questionNumber: "7",
+      questionText: "Find the area of the following. The uploaded assessment text exposes part labels and the circle-area instruction, but the diagram dimensions for parts a and c are not extractable from the provided PDF text.",
+      marksTotal: 6,
+      criteria: [
+        { text: "• Correctly calculates all required areas", marks: 6 },
+        { text: "• Correct substitution into area formulae with units, or equivalent merit", marks: 3 },
+        { text: "• Identifies appropriate area formulae", marks: 1 }
+      ],
+      parts: [
+        {
+          partLabel: "a",
+          questionText: "Area from diagram.",
+          marksTotal: 2,
+          criteria: [],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Area method",
+            steps: [
+              { expression: "Identify the shape and its given dimensions", reason: "Read dimensions from the diagram" },
+              { expression: "Substitute into the appropriate area formula", reason: "Use rectangle, triangle, parallelogram or composite-area formula as needed" },
+              { expression: "State the answer in square units", reason: "Area uses units²" }
+            ],
+            finalAnswer: "Use the diagram dimensions from the original paper."
+          }
+        },
+        {
+          partLabel: "b",
+          questionText: "Area of a circle, A = πr². Give the answer correct to 1 decimal place.",
+          marksTotal: 2,
+          criteria: [],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Area of a circle",
+            steps: [
+              { expression: "A = πr²", reason: "Use the circle area formula" },
+              { expression: "A = π × r²", reason: "Substitute the radius from the diagram" },
+              { expression: "Evaluate using a calculator", reason: "Calculate the decimal value" },
+              { expression: "Round to 1 decimal place", reason: "Required by the question" }
+            ],
+            finalAnswer: "A = πr², rounded to 1 decimal place after substituting the given radius."
+          }
+        },
+        {
+          partLabel: "c",
+          questionText: "Area from diagram.",
+          marksTotal: 2,
+          criteria: [],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Area method",
+            steps: [
+              { expression: "Break the shape into simple regions if needed", reason: "Use composite-area strategy" },
+              { expression: "Area = sum of required parts − any removed parts", reason: "Add and subtract areas carefully" },
+              { expression: "State the answer in square units", reason: "Area uses units²" }
+            ],
+            finalAnswer: "Use the diagram dimensions from the original paper."
+          }
+        }
+      ],
+      teacherNotes: [
+        "Question 7 requires the original diagrams to produce numerical final answers. Do not invent missing dimensions."
+      ]
+    }
+  ]
+};
+
+/* WORKED_SOLUTION_DATA_END */
+
+/* Renderer controls all layout, typography, pagination and diagrams. */
+renderWorkedSolution("app", workedSolutionData);
+</script>
+
+</body>
+</html>

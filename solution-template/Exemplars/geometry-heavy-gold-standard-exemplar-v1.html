@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<!--
+CHHS Renderer Template
+Version: 1.2 Compact Full Template
+Geometry-Focused Gold Standard Exemplar
+Renderer Architecture Protected
+Only replace the workedSolutionData block between the START and END markers.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>CHHS Geometry Gold Standard Exemplar</title>
+
+<style>
+:root{
+    --border:#444;
+    --light:#f5f5f5;
+    --heading:#111;
+    --text:#222;
+    --accent:#0b57d0;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    padding:40px;
+    background:#dfe6ec;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+}
+
+#app{ width:100%; }
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:20mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #222;
+    padding-bottom:12px;
+    margin-bottom:22px;
+}
+
+.school-block h1{
+    margin:0;
+    font-size:30px;
+    letter-spacing:1px;
+    color:var(--accent);
+}
+
+.school-block h2{
+    margin:5px 0 0 0;
+    font-size:16px;
+    font-weight:500;
+}
+
+.meta{
+    text-align:right;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.question-section{
+    margin-bottom:34px;
+    break-inside:avoid;
+}
+
+.question-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--heading);
+}
+
+.question-text{
+    font-size:14px;
+    line-height:1.45;
+    margin-bottom:10px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+}
+
+.criteria-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:12px;
+}
+
+.criteria-table th{
+    border:1.5px solid var(--border);
+    background:#f1f1f1;
+    padding:6px 8px;
+    font-size:14px;
+    text-align:left;
+}
+
+.criteria-table td{
+    border:1.5px solid var(--border);
+    padding:6px 8px;
+    font-size:13px;
+    vertical-align:top;
+}
+
+.criteria-table .marks{
+    width:80px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.sample-answer-title{
+    font-size:15px;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.solution-intro{
+    font-size:13px;
+    line-height:1.45;
+    margin-bottom:8px;
+}
+
+.solution-box{
+    padding-left:6px;
+    font-size:15px;
+    line-height:1.6;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+}
+
+.solution-step{ margin-bottom:5px; }
+
+.final-answer{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.short-final-answer{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.step-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#555;
+    margin-left:10px;
+}
+
+.diagram-box{
+    width:100%;
+    min-height:210px;
+    margin-top:10px;
+    border:1.2px solid #bbb;
+    background:#fff;
+    padding:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.diagram-box.large{
+    min-height:270px;
+}
+
+.teacher-note{
+    margin-top:12px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.teacher-note ul{
+    margin:5px 0 0 16px;
+    padding:0;
+}
+
+.missing-engine{
+    color:#900;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* Algebra layout engine styles */
+
+.algebra-layout {
+    width: 100%;
+    border: 1.5px solid #222;
+    background: #fff;
+    padding: 10px 14px;
+    margin-top: 10px;
+}
+
+.algebra-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.algebra-steps {
+    display: grid;
+    gap: 2px;
+}
+
+.algebra-row {
+    display: grid;
+    grid-template-columns: 26px 1fr 165px;
+    column-gap: 9px;
+    align-items: start;
+    padding: 2px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.algebra-line-number {
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 2px;
+}
+
+.algebra-expression {
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.algebra-reason {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #444;
+    line-height: 1.35;
+    padding-top: 3px;
+}
+
+.algebra-final {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1.5px solid #222;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.algebra-notes {
+    margin-top: 10px;
+    background: #f7f7f7;
+    border-left: 4px solid #777;
+    padding: 8px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.algebra-note { margin-bottom: 3px; }
+
+/* Grouped subpart support */
+
+.part{
+    margin-top:12px;
+    padding-top:8px;
+    border-top:1px dashed #bbb;
+}
+
+.part-label{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:5px;
+    color:var(--heading);
+}
+
+.part-question-text{
+    font-size:13px;
+    line-height:1.35;
+    margin-bottom:7px;
+}
+
+.compact-note{
+    font-size:11px;
+    color:#555;
+    margin-top:4px;
+}
+
+.footer{
+    margin-top:40px;
+    border-top:1.5px solid #222;
+    padding-top:8px;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+}
+
+.page-break{ break-before:page; }
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        width:100%;
+        min-height:auto;
+        box-shadow:none;
+        margin:0;
+        padding:13mm;
+    }
+
+    .question-section{
+        break-inside:avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script src="diagram-engines/algebra-layout.js"></script>
+<script src="diagram-engines/coordinate-graph.js"></script>
+<script src="diagram-engines/box-plot.js"></script>
+<script src="diagram-engines/geometry-engine.js"></script>
+<script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/integer-number-line-solution.js"></script>
+<script src="diagram-engines/probability-tree.js"></script>
+<script src="renderers/render-worked-solution.js"></script>
+
+<script>
+
+/* WORKED_SOLUTION_DATA_START */
+
+const workedSolutionData = {
+  documentTitle: "Geometry-Focused Gold Standard Exemplar",
+  school: "CHHS",
+  course: "Mathematics Faculty",
+  year: "Renderer Example",
+  mode: "teacher",
+  assessmentMode: "compact",
+  questions: [
+    {
+      questionNumber: "1",
+      questionText: "Cosine rule and area. A triangular grassed section has two sides of 9 m and 3 m with an included angle of 60°. Find the time to mow the section if 1 m² takes 5/20 minutes.",
+      marksTotal: 4,
+      criteria: [
+        { text: "• Provides correct solution", marks: 4 },
+        { text: "• Finds the area of the grassed section, or equivalent merit", marks: 3 },
+        { text: "• Finds the length of a side of the grassed section, or equivalent merit", marks: 2 },
+        { text: "• Identifies an angle of 60°, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Cosine rule and area",
+        steps: [
+          { expression: "c² = 9² + 3² − 2 × 9 × 3 cos 60°", reason: "Use the cosine rule" },
+          { expression: "c ≈ 7.937", reason: "Calculate side length" },
+          { expression: "Area = 1/2 × 7.937 × 7.937 × sin 60°", reason: "Use triangle area formula" },
+          { expression: "= 27.2798...", reason: "Calculate area" },
+          { expression: "5/20 minutes per 1 m²", reason: "Rate for mowing" },
+          { expression: "5/20 × 27.2798 minutes", reason: "Multiply by area" },
+          { expression: "= 6.81 minutes", reason: "Calculate" },
+          { expression: "≈ 7 minutes", reason: "Round sensibly" }
+        ],
+        finalAnswer: "≈ 7 minutes",
+        diagram: {
+          engine: "geometry-engine",
+          config: {
+            title: "Cosine rule setup",
+            points: {
+              A: { x: 190, y: 310 },
+              B: { x: 385, y: 120 },
+              C: { x: 460, y: 210 }
+            },
+            shapes: [
+              { type: "line", from: "A", to: "B" },
+              { type: "line", from: "B", to: "C" },
+              { type: "line", from: "C", to: "A" }
+            ],
+            labels: [
+              { x: 275, y: 220, text: "9", small: true },
+              { x: 430, y: 160, text: "3", small: true },
+              { x: 340, y: 270, text: "c", small: true },
+              { x: 388, y: 150, text: "60°", small: true }
+            ],
+            angleMarks: [
+              { vertex: "B", from: "A", to: "C", label: "60°", r: 32, reflex: false }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "2",
+      questionText: "Bearings and right-triangle trigonometry. Use the diagram to identify an angle in triangle PXY, then find XP.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Provides the correct solution", marks: 2 },
+        { text: "• Identifies an angle in triangle PXY, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Bearing triangle",
+        steps: [
+          { expression: "∠PXY = 180° − 120°", reason: "Use the bearing angle" },
+          { expression: "= 60°", reason: "Calculate" },
+          { expression: "XP = 15 km × cos 60°", reason: "Use adjacent = hypotenuse × cos θ" },
+          { expression: "= 7.5 km", reason: "Calculate" }
+        ],
+        finalAnswer: "XP = 7.5 km",
+        diagram: {
+          engine: "geometry-engine",
+          config: {
+            title: "Bearing diagram",
+            points: {
+              X: { x: 380, y: 150 },
+              N: { x: 380, y: 55 },
+              E: { x: 515, y: 150 },
+              P: { x: 380, y: 300 },
+              Y: { x: 575, y: 300 },
+              C: { x: 120, y: 300 }
+            },
+            shapes: [
+              { type: "line", from: "X", to: "N" },
+              { type: "line", from: "X", to: "E" },
+              { type: "line", from: "X", to: "P" },
+              { type: "line", from: "X", to: "Y" },
+              { type: "line", from: "X", to: "C" },
+              { type: "line", from: "C", to: "Y" }
+            ],
+            rightAngles: [
+              { at: "P", size: 16 }
+            ],
+            labels: [
+              { point: "X", text: "X", dx: -15, dy: -5 },
+              { point: "N", text: "N", dx: 0, dy: -10 },
+              { point: "E", text: "E", dx: 18, dy: 5 },
+              { point: "P", text: "P", dx: 0, dy: 28 },
+              { point: "Y", text: "Y", dx: 15, dy: 18 },
+              { point: "C", text: "C", dx: -18, dy: 18 },
+              { x: 210, y: 245, text: "40 km", small: true },
+              { x: 510, y: 230, text: "15 km", small: true },
+              { x: 450, y: 205, text: "60°", small: true },
+              { x: 425, y: 115, text: "120°", small: true },
+              { x: 585, y: 110, text: "NOT TO SCALE", small: true }
+            ],
+            angleMarks: [
+              { vertex: "X", from: "N", to: "Y", label: "120°", r: 58, reflex: false },
+              { vertex: "X", from: "P", to: "Y", label: "60°", r: 36, reflex: false }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "3",
+      questionText: "Surface area of a solid. A solid has five square faces, two triangular faces and two rectangular faces. Find the total surface area.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 3 },
+        { text: "• Calculates the area of two different relevant faces, or equivalent merit", marks: 2 },
+        { text: "• Calculates the area of one relevant face, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Surface area",
+        steps: [
+          { expression: "Height of triangle = 11 − 8 = 3", reason: "Find the triangular face height" },
+          { expression: "Five square faces = 8² × 5 = 320", reason: "Area of five square faces" },
+          { expression: "Two triangular faces = (3 × 8 ÷ 2) × 2", reason: "Area of two triangles" },
+          { expression: "= 24", reason: "Calculate" },
+          { expression: "Two rectangular faces = 5 × 8 × 2", reason: "Area of two rectangles" },
+          { expression: "= 80", reason: "Calculate" },
+          { expression: "Total surface area = 320 + 24 + 80", reason: "Add all faces" },
+          { expression: "= 424 cm²", reason: "Calculate" }
+        ],
+        finalAnswer: "424 cm²",
+        diagram: {
+          engine: "geometry-engine",
+          config: {
+            title: "Triangular face",
+            points: {
+              A: { x: 180, y: 285 },
+              B: { x: 465, y: 285 },
+              C: { x: 322, y: 120 },
+              F: { x: 322, y: 285 }
+            },
+            shapes: [
+              { type: "line", from: "A", to: "B" },
+              { type: "line", from: "A", to: "C" },
+              { type: "line", from: "C", to: "B" },
+              { type: "line", from: "C", to: "F" }
+            ],
+            labels: [
+              { x: 322, y: 318, text: "8 cm", small: true },
+              { x: 285, y: 205, text: "3 cm", small: true },
+              { x: 570, y: 205, text: "Height of triangle = 11 − 8 = 3", small: true }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "4",
+      questionText: "Cosine rule. Find x to 2 significant figures.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution with correct rounding", marks: 3 },
+        { text: "• Calculates correct value of x", marks: 2 },
+        { text: "• Attempts to use cosine rule", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Cosine rule",
+        steps: [
+          { expression: "x² = 11² + 13² − 2 × 11 × 13 × cos 80°", reason: "Use the cosine rule" },
+          { expression: "= 240.3306...", reason: "Calculate x²" },
+          { expression: "x = √240.3306...", reason: "Square root both sides" },
+          { expression: "= 15.5027...", reason: "Calculate" },
+          { expression: "= 16", reason: "Round to 2 significant figures" }
+        ],
+        finalAnswer: "x = 16"
+      }
+    },
+    {
+      questionNumber: "5",
+      questionText: "Scatterplot and line of best fit. Plot the two marked points and use the line to model the relationship between phone use and sleep.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Plots both points correctly", marks: 2 },
+        { text: "• Plots one point correctly, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Line of best fit",
+        steps: [
+          { expression: "A reasonable line of best fit decreases from left to right", reason: "More phone use is associated with less sleep" },
+          { expression: "Two plotted points lie on the trend line", reason: "Use points to guide the line" }
+        ],
+        finalAnswer: "Negative association shown",
+        diagram: {
+          engine: "coordinate-graph",
+          config: {
+            title: "Hours of sleep vs phone use",
+            xmin: 0,
+            xmax: 10,
+            ymin: 4,
+            ymax: 11,
+            gridStep: 1,
+            xTickStep: 1,
+            yTickStep: 1,
+            xLabel: "Hours of phone use per day",
+            yLabel: "Hours of sleep per day",
+            lines: [
+              { equation: "y=-0.55*x+10" }
+            ],
+            points: [
+              { x: 0, y: 10, label: "" },
+              { x: 0.5, y: 9.7, label: "" },
+              { x: 0.7, y: 10.0, label: "" },
+              { x: 1, y: 9.5, label: "" },
+              { x: 1.5, y: 9.5, label: "" },
+              { x: 2.5, y: 8.2, label: "" },
+              { x: 2.5, y: 8.8, label: "" },
+              { x: 3, y: 8.5, label: "" },
+              { x: 3, y: 8.2, label: "" },
+              { x: 3.5, y: 7.8, label: "" },
+              { x: 4, y: 8.0, label: "×" },
+              { x: 4.5, y: 7.5, label: "" },
+              { x: 5, y: 7.2, label: "" },
+              { x: 5.5, y: 7.0, label: "" },
+              { x: 6, y: 6.8, label: "" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "6",
+      questionText: "Graphing a linear charge model. Graph Provider A's charges.",
+      marksTotal: 1,
+      criteria: [
+        { text: "• Graphs Provider A’s charges", marks: 1 }
+      ],
+      solution: {
+        type: "diagram",
+        diagram: {
+          engine: "coordinate-graph",
+          config: {
+            title: "Total charge compared with electricity use",
+            xmin: 0,
+            xmax: 1000,
+            ymin: 0,
+            ymax: 400,
+            gridStep: 40,
+            xTickStep: 200,
+            yTickStep: 40,
+            xLabel: "Electricity used in a month (kWh)",
+            yLabel: "Total charge ($)",
+            lines: [
+              { equation: "y=0.25*x+40", label: "Provider A" },
+              { equation: "y=0.35*x", label: "Provider B" }
+            ],
+            points: [
+              { x: 400, y: 140, label: "" },
+              { x: 1000, y: 290, label: "" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "7",
+      questionText: "Volume of a hemisphere. A bowl has radius 8 cm. Find the volume to the nearest cubic centimetre.",
+      marksTotal: 2,
+      criteria: [
+        { text: "• Provides correct solution", marks: 2 },
+        { text: "• Applies the volume of a sphere formula, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Hemisphere volume",
+        steps: [
+          { expression: "The radius of the bowl is 8 cm", reason: "Identify radius" },
+          { expression: "Volume = 1/2 × 4/3πr³", reason: "A hemisphere is half a sphere" },
+          { expression: "= 1/2 × 4/3π(8)³", reason: "Substitute r = 8" },
+          { expression: "= 1072 cm³", reason: "Round to nearest cubic centimetre" }
+        ],
+        finalAnswer: "1072 cm³"
+      }
+    }
+  ]
+};
+
+/* WORKED_SOLUTION_DATA_END */
+
+/* Renderer controls all layout, typography, pagination and diagrams. */
+renderWorkedSolution("app", workedSolutionData);
+</script>
+
+</body>
+</html>

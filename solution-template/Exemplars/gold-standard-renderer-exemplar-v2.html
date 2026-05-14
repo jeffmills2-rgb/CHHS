@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<!--
+CHHS Renderer Template
+Version: 1.2 Gold Standard Exemplar
+Renderer Architecture Protected
+Only replace the workedSolutionData block between the START and END markers.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CHHS Gold Standard Worked Solution Exemplar</title>
+
+<style>
+:root{
+    --border:#444;
+    --light:#f5f5f5;
+    --heading:#111;
+    --text:#222;
+    --accent:#0b57d0;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+    margin:0;
+    padding:40px;
+    background:#dfe6ec;
+    font-family:Arial, Helvetica, sans-serif;
+    color:var(--text);
+}
+
+#app{ width:100%; }
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    margin:auto;
+    background:white;
+    padding:20mm;
+    box-shadow:0 0 18px rgba(0,0,0,0.15);
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #222;
+    padding-bottom:12px;
+    margin-bottom:22px;
+}
+
+.school-block h1{
+    margin:0;
+    font-size:30px;
+    letter-spacing:1px;
+    color:var(--accent);
+}
+
+.school-block h2{
+    margin:5px 0 0 0;
+    font-size:16px;
+    font-weight:500;
+}
+
+.meta{
+    text-align:right;
+    font-size:12px;
+    line-height:1.5;
+}
+
+.question-section{
+    margin-bottom:34px;
+    break-inside:avoid;
+}
+
+.question-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:var(--heading);
+}
+
+.question-text{
+    font-size:14px;
+    line-height:1.45;
+    margin-bottom:10px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+}
+
+.criteria-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:12px;
+}
+
+.criteria-table th{
+    border:1.5px solid var(--border);
+    background:#f1f1f1;
+    padding:6px 8px;
+    font-size:14px;
+    text-align:left;
+}
+
+.criteria-table td{
+    border:1.5px solid var(--border);
+    padding:6px 8px;
+    font-size:13px;
+    vertical-align:top;
+}
+
+.criteria-table .marks{
+    width:80px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.sample-answer-title{
+    font-size:15px;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.solution-intro{
+    font-size:13px;
+    line-height:1.45;
+    margin-bottom:8px;
+}
+
+.solution-box{
+    padding-left:6px;
+    font-size:15px;
+    line-height:1.6;
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+}
+
+.solution-step{ margin-bottom:5px; }
+
+.final-answer{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.short-final-answer{
+    font-family:"Cambria Math","STIX Two Math","Times New Roman",serif;
+    font-size:16px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.step-reason{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:11px;
+    color:#555;
+    margin-left:10px;
+}
+
+.diagram-box{
+    width:100%;
+    min-height:210px;
+    margin-top:10px;
+    border:1.2px solid #bbb;
+    background:#fff;
+    padding:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.diagram-box.large{
+    min-height:270px;
+}
+
+.teacher-note{
+    margin-top:12px;
+    background:#f8f8f8;
+    border-left:4px solid #999;
+    padding:8px 12px;
+    font-size:12px;
+    line-height:1.45;
+}
+
+.teacher-note ul{
+    margin:5px 0 0 16px;
+    padding:0;
+}
+
+.missing-engine{
+    color:#900;
+    font-weight:bold;
+    font-size:13px;
+}
+
+/* Algebra layout engine styles */
+
+.algebra-layout {
+    width: 100%;
+    border: 1.5px solid #222;
+    background: #fff;
+    padding: 10px 14px;
+    margin-top: 10px;
+}
+
+.algebra-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.algebra-steps {
+    display: grid;
+    gap: 2px;
+}
+
+.algebra-row {
+    display: grid;
+    grid-template-columns: 26px 1fr 165px;
+    column-gap: 9px;
+    align-items: start;
+    padding: 2px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.algebra-line-number {
+    font-size: 11px;
+    color: #666;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-top: 2px;
+}
+
+.algebra-expression {
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.algebra-reason {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    color: #444;
+    line-height: 1.35;
+    padding-top: 3px;
+}
+
+.algebra-final {
+    margin-top: 9px;
+    padding-top: 6px;
+    border-top: 1.5px solid #222;
+    font-family: "Cambria Math", "STIX Two Math", "Times New Roman", serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.algebra-notes {
+    margin-top: 10px;
+    background: #f7f7f7;
+    border-left: 4px solid #777;
+    padding: 8px 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.algebra-note { margin-bottom: 3px; }
+
+.footer{
+    margin-top:40px;
+    border-top:1.5px solid #222;
+    padding-top:8px;
+    font-size:11px;
+    display:flex;
+    justify-content:space-between;
+    color:#666;
+}
+
+/* Grouped subpart support */
+
+.part{
+    margin-top:12px;
+    padding-top:8px;
+    border-top:1px dashed #bbb;
+}
+
+.part-label{
+    font-size:15px;
+    font-weight:700;
+    margin-bottom:5px;
+    color:var(--heading);
+}
+
+.part-question-text{
+    font-size:13px;
+    line-height:1.35;
+    margin-bottom:7px;
+}
+
+.compact-note{
+    font-size:11px;
+    color:#555;
+    margin-top:4px;
+}
+
+.page-break{ break-before:page; }
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .page{
+        width:100%;
+        min-height:auto;
+        box-shadow:none;
+        margin:0;
+        padding:13mm;
+    }
+
+    .question-section{
+        break-inside:avoid;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script src="diagram-engines/algebra-layout.js"></script>
+<script src="diagram-engines/coordinate-graph.js"></script>
+<script src="diagram-engines/box-plot.js"></script>
+<script src="diagram-engines/geometry-engine.js"></script>
+<script src="diagram-engines/number-line.js"></script>
+<script src="diagram-engines/integer-number-line-solution.js"></script>
+<script src="diagram-engines/probability-tree.js"></script>
+<script src="renderers/render-worked-solution.js"></script>
+
+<script>
+
+/* WORKED_SOLUTION_DATA_START */
+
+const workedSolutionData = {
+  documentTitle: "Gold Standard Worked Solution Exemplar",
+  school: "CHHS",
+  course: "Mathematics Faculty",
+  year: "Renderer Example",
+  mode: "teacher",
+  assessmentMode: "compact",
+  questions: [
+    {
+      questionNumber: "16",
+      questionText: "Best-buy comparison. A job needs 80 L of paint. Ten-litre cans cost $205 each and four-litre cans cost $90 each. Find the saving made by buying ten-litre cans.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 2 },
+        { text: "• Finds the cost of ten-litre cans, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Best-buy comparison",
+        steps: [
+          { expression: "Cost of ten-litre cans:  $205 × 8", reason: "80 L needs 8 ten-litre cans" },
+          { expression: "= $1640", reason: "Calculate total cost" },
+          { expression: "Cost of four-litre cans:  $90 × 20", reason: "80 L needs 20 four-litre cans" },
+          { expression: "= $1800", reason: "Calculate total cost" },
+          { expression: "Savings = $1800 − $1640", reason: "Compare totals" },
+          { expression: "= $160", reason: "Subtract" }
+        ],
+        finalAnswer: "$160 saving"
+      }
+    },
+    {
+      questionNumber: "17",
+      questionText: "Use the plotted points to find the gradient and y-intercept, then write the equation of the line.",
+      marksTotal: 6,
+      criteria: [
+        { text: "• Provides correct solution", marks: 3 },
+        { text: "• Finds correct gradient and y-intercept, or equivalent merit", marks: 2 },
+        { text: "• Plots both points on the graph, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Gradient and intercept",
+        steps: [
+          { expression: "m = rise ÷ run", reason: "Use gradient as change in y over change in x" },
+          { expression: "m = −10 ÷ 5", reason: "From (0,14) to (5,4)" },
+          { expression: "m = −2", reason: "Simplify" },
+          { expression: "Using y = mx + c", reason: "Use gradient-intercept form" },
+          { expression: "m = −2,  c = 14", reason: "The graph crosses the y-axis at 14" },
+          { expression: "y = −2x + 14", reason: "Substitute m and c" }
+        ],
+        finalAnswer: "y = −2x + 14",
+        diagram: {
+          engine: "coordinate-graph",
+          config: {
+            title: "Line of best fit",
+            xmin: 0,
+            xmax: 6,
+            ymin: 0,
+            ymax: 18,
+            gridStep: 1,
+            xTickStep: 1,
+            yTickStep: 2,
+            lines: [
+              { equation: "y=-2*x+14" }
+            ],
+            points: [
+              { x: 0, y: 16, label: "" },
+              { x: 0, y: 14, label: "" },
+              { x: 1, y: 16, label: "" },
+              { x: 1, y: 14, label: "" },
+              { x: 1, y: 10, label: "" },
+              { x: 1, y: 8, label: "" },
+              { x: 2, y: 11, label: "" },
+              { x: 2, y: 9, label: "" },
+              { x: 3, y: 10, label: "" },
+              { x: 3, y: 8, label: "" },
+              { x: 3, y: 6, label: "" },
+              { x: 4, y: 9, label: "" },
+              { x: 4, y: 3, label: "" },
+              { x: 5, y: 5, label: "" },
+              { x: 5, y: 4, label: "" },
+              { x: 5, y: 3, label: "" }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "22",
+      questionText: "Grouped subparts. These examples demonstrate compact handling of one-mark and two-mark answers without expanding every subpart into a full page section.",
+      marksTotal: 5,
+      criteria: [],
+      parts: [
+        {
+          partLabel: "a",
+          questionText: "Find the total capacity.",
+          marksTotal: 1,
+          criteria: [
+            { text: "• Provides correct answer", marks: 1 }
+          ],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Capacity",
+            steps: [
+              { expression: "Capacity = 26 + 24 + 12", reason: "Add the inflows" },
+              { expression: "= 62 L/min", reason: "Calculate" }
+            ],
+            finalAnswer: "62 L/min"
+          }
+        },
+        {
+          partLabel: "b i",
+          questionText: "Find x.",
+          marksTotal: 2,
+          criteria: [
+            { text: "• Provides correct solution", marks: 2 },
+            { text: "• Provides x = 30, or equivalent merit", marks: 1 }
+          ],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Flow balance",
+            steps: [
+              { expression: "Outflow of C = 5 + 13 + 12 = 30", reason: "Add the outflows" },
+              { expression: "Inflow must equal outflow", reason: "Use conservation of flow" },
+              { expression: "∴ x = 30", reason: "Balance inflow and outflow" }
+            ],
+            finalAnswer: "x = 30"
+          }
+        },
+        {
+          partLabel: "b ii",
+          questionText: "List the paths.",
+          marksTotal: 1,
+          criteria: [
+            { text: "• Provides correct answer", marks: 1 }
+          ],
+          solution: {
+            type: "short-answer",
+            finalAnswer: "DE, CF, DG, FG"
+          }
+        },
+        {
+          partLabel: "b iii",
+          questionText: "List the route.",
+          marksTotal: 1,
+          criteria: [
+            { text: "• Provides correct answer", marks: 1 }
+          ],
+          solution: {
+            type: "short-answer",
+            finalAnswer: "ACEG"
+          }
+        }
+      ]
+    },
+    {
+      questionNumber: "23",
+      questionText: "Compare the dividend yield for two companies and choose the better investment.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 2 },
+        { text: "• Calculates correct dividend yield for one company, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Dividend yield comparison",
+        steps: [
+          { expression: "Company A yield = 4.92 ÷ 25.43 × 100", reason: "Dividend ÷ share price × 100" },
+          { expression: "≈ 19%", reason: "Calculate percentage yield" },
+          { expression: "Company B yield = 0.45 ÷ 2.13 × 100", reason: "Dividend ÷ share price × 100" },
+          { expression: "≈ 21%", reason: "Calculate percentage yield" },
+          { expression: "∴ Company B would be better to invest in", reason: "It has the higher yield" }
+        ],
+        finalAnswer: "Company B"
+      }
+    },
+    {
+      questionNumber: "24",
+      questionText: "A sample of 90 snails contains 18 tagged snails. Estimate the number of tagged snails in a population of 20.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 2 },
+        { text: "• Provides a correct ratio for tagged snails, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "algebra",
+        algebraTitle: "Tagged sample estimate",
+        steps: [
+          { expression: "18/90 × 20", reason: "Use the tagged proportion" },
+          { expression: "= 4", reason: "Calculate" }
+        ],
+        finalAnswer: "4 snails"
+      }
+    },
+    {
+      questionNumber: "26",
+      questionText: "Measurement applications. This question demonstrates grouped multi-part working with compact formula use.",
+      marksTotal: 9,
+      criteria: [],
+      parts: [
+        {
+          partLabel: "a",
+          questionText: "Use two applications of the trapezoidal rule to estimate the area.",
+          marksTotal: 3,
+          criteria: [
+            { text: "• Provides correct answer", marks: 2 },
+            { text: "• Attempts to use 2 applications of the trapezoidal rule, or equivalent merit", marks: 1 }
+          ],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Trapezoidal rule",
+            steps: [
+              { expression: "A ≈ 5.1/2(6 + 3.8) + 5.1/2(3.8 + 0)", reason: "Apply the trapezoidal rule twice" },
+              { expression: "≈ 34.68 cm²", reason: "Calculate" }
+            ],
+            finalAnswer: "34.68 cm²"
+          }
+        },
+        {
+          partLabel: "b",
+          questionText: "Find the curved surface area.",
+          marksTotal: 3,
+          criteria: [
+            { text: "• Provides correct solution", marks: 2 },
+            { text: "• Finds at least 2 correct areas as part of a surface area calculation, or equivalent merit", marks: 1 }
+          ],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Surface area comparison",
+            steps: [
+              { expression: "1300 = (2 × 34.68) + (10.2 × 40) + (6 × 40) + curved surface", reason: "Add known surface areas" },
+              { expression: "1300 = 717.36 + curved surface", reason: "Simplify known areas" },
+              { expression: "1300 − 717.36 = curved surface", reason: "Subtract known area" },
+              { expression: "582.64 cm² = curved surface", reason: "Calculate" }
+            ],
+            finalAnswer: "582.64 cm²"
+          }
+        },
+        {
+          partLabel: "c",
+          questionText: "Find the percentage error to 3 significant figures.",
+          marksTotal: 3,
+          criteria: [
+            { text: "• Provides correct solution including correct significant figures", marks: 2 },
+            { text: "• Provides correct absolute error, or equivalent merit", marks: 1 }
+          ],
+          solution: {
+            type: "algebra",
+            algebraTitle: "Percentage error",
+            steps: [
+              { expression: "Absolute error = 1/2 × 0.1 cm", reason: "Half the measuring unit" },
+              { expression: "= 0.05 cm", reason: "Calculate absolute error" },
+              { expression: "% error = 0.05 ÷ 10.2 × 100%", reason: "Percentage error formula" },
+              { expression: "= 0.4901...%", reason: "Calculate" },
+              { expression: "= 0.490%", reason: "3 significant figures" }
+            ],
+            finalAnswer: "0.490%"
+          }
+        }
+      ]
+    },
+    {
+      questionNumber: "28",
+      questionText: "A box plot represents the heights of students. Use the graph to write the five-number summary.",
+      marksTotal: 6,
+      criteria: [
+        { text: "• Provides correct box-plot", marks: 3 },
+        { text: "• Provides correct five-number summary, or equivalent merit", marks: 2 },
+        { text: "• Provides correct median, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Five-number summary",
+        steps: [
+          { expression: "Minimum = 130", reason: "Left whisker" },
+          { expression: "Q₁ = 135", reason: "Left edge of box" },
+          { expression: "Median = 140", reason: "Line inside box" },
+          { expression: "Q₃ = 160", reason: "Right edge of box" },
+          { expression: "Maximum = 180", reason: "Right whisker" }
+        ],
+        finalAnswer: "Minimum 130, Q₁ 135, Median 140, Q₃ 160, Maximum 180",
+        diagram: {
+          engine: "box-plot",
+          config: {
+            title: "Box plot: Height (cm)",
+            min: 130,
+            q1: 135,
+            median: 140,
+            q3: 160,
+            max: 180,
+            scaleMin: 125,
+            scaleMax: 185,
+            step: 5,
+            axisLabel: "Height (cm)",
+            showEndDots: true
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "31",
+      questionText: "A bag contains 7 blue counters and 9 yellow counters. Two counters are drawn without replacement. Find P(BB) + P(YY).",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 2 },
+        { text: "• Provides a calculation that shows evidence of understanding without replacement, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Probability without replacement",
+        steps: [
+          { expression: "P(BB) + P(YY)", reason: "Same colour means blue-blue or yellow-yellow" },
+          { expression: "= (7/16 × 6/15) + (9/16 × 8/15)", reason: "Second draw is from 15 counters" },
+          { expression: "= 42/240 + 72/240", reason: "Multiply each branch" },
+          { expression: "= 114/240", reason: "Add" },
+          { expression: "= 19/40", reason: "Simplify" }
+        ],
+        finalAnswer: "19/40",
+        diagram: {
+          engine: "probability-tree",
+          config: {
+            outcomes: [
+              {
+                label: "Blue",
+                probability: "7/16",
+                outcomes: [
+                  { label: "Blue", probability: "6/15" },
+                  { label: "Yellow", probability: "9/15" }
+                ]
+              },
+              {
+                label: "Yellow",
+                probability: "9/16",
+                outcomes: [
+                  { label: "Blue", probability: "7/15" },
+                  { label: "Yellow", probability: "8/15" }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      questionNumber: "35",
+      questionText: "A trigonometry solution using a labelled diagram and concise sine rule working.",
+      marksTotal: 3,
+      criteria: [
+        { text: "• Provides correct solution", marks: 3 },
+        { text: "• Correctly uses the sine rule, or equivalent merit", marks: 2 },
+        { text: "• Attempts to use the sine rule, or equivalent merit", marks: 1 }
+      ],
+      solution: {
+        type: "mixed",
+        algebraTitle: "Sine rule",
+        steps: [
+          { expression: "∠PTA = θ", reason: "Define the angle" },
+          { expression: "sin θ ÷ 75 = sin 36° ÷ 51", reason: "Use the sine rule" },
+          { expression: "sin θ = (sin 36° ÷ 51) × 75", reason: "Rearrange" },
+          { expression: "θ = 59.81...°", reason: "Calculate" },
+          { expression: "≈ 60°", reason: "Round" },
+          { expression: "∠PTA is obtuse", reason: "Use the ambiguous case" },
+          { expression: "∴ ∠PTA = 180° − 60° = 120°", reason: "Find the obtuse angle" },
+          { expression: "∠TPA = 180° − 120° − 36° = 24°", reason: "Angle sum of triangle" },
+          { expression: "TA ÷ sin 24° = 51 ÷ sin 36°", reason: "Use the sine rule again" },
+          { expression: "TA = (51 ÷ sin 36°) × sin 24°", reason: "Rearrange" },
+          { expression: "≈ 35.29 m", reason: "Calculate" }
+        ],
+        finalAnswer: "TA ≈ 35.29 m",
+        diagram: {
+          engine: "geometry-engine",
+          config: {
+            title: "Sine rule diagram",
+            points: {
+              P: { x: 80, y: 300 },
+              A: { x: 610, y: 300 },
+              T: { x: 390, y: 120 },
+              F: { x: 390, y: 300 },
+              E: { x: 610, y: 120 }
+            },
+            shapes: [
+              { type: "line", from: "P", to: "A" },
+              { type: "line", from: "P", to: "T" },
+              { type: "line", from: "T", to: "A" },
+              { type: "line", from: "T", to: "F" }
+            ],
+            dashed: [
+              { from: "T", to: "E" }
+            ],
+            rightAngles: [
+              { at: "F", size: 15 }
+            ],
+            labels: [
+              { point: "P", text: "P", dx: -18, dy: 8 },
+              { point: "A", text: "A", dx: 18, dy: 8 },
+              { point: "T", text: "T", dx: 0, dy: -14 },
+              { x: 205, y: 220, text: "51", small: true },
+              { x: 340, y: 318, text: "75", small: true },
+              { x: 410, y: 155, text: "θ", small: true },
+              { x: 545, y: 278, text: "36°", small: true },
+              { x: 455, y: 142, text: "36°", small: true }
+            ],
+            angleMarks: [
+              { vertex: "A", from: "P", to: "T", label: "36°", r: 34, reflex: false },
+              { vertex: "T", from: "A", to: "P", label: "θ", r: 30, reflex: false }
+            ]
+          }
+        }
+      }
+    }
+  ]
+};
+
+/* WORKED_SOLUTION_DATA_END */
+
+/* Renderer controls all layout, typography, pagination and diagrams. */
+renderWorkedSolution("app", workedSolutionData);
+</script>
+
+</body>
+</html>
